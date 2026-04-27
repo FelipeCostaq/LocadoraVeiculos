@@ -1,1 +1,6 @@
-<Solution />
+<Solution>
+  <Project Path="LocadoraVeiculos.API/LocadoraVeiculos.API.csproj" />
+  <Project Path="LocadoraVeiculos.Domain/LocadoraVeiculos.Domain.csproj" />
+  <Project Path="LocadoraVeiculos.Entities/LocadoraVeiculos.Entities.csproj" />
+  <Project Path="LocadoraVeiculos.Infrastructure/LocadoraVeiculos.Infrastructure.csproj" />
+</Solution>

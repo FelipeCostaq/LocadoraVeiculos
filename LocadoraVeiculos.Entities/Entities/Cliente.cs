@@ -1,0 +1,38 @@
+﻿using System;
+using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
+using System.Text;
+
+namespace LocadoraVeiculos.Entities.Entities
+{
+    public class Cliente
+    {
+        // PK
+        public Guid Id { get; set; }
+
+        [Required]
+        [MaxLength(150)]
+        public string Nome { get; set; } = string.Empty;
+
+        [Required]
+        public string CPF { get; set; } = string.Empty;
+
+        [Required]
+        [DataType(DataType.EmailAddress)]
+        [EmailAddress]
+        public string Email { get; set; } = string.Empty;
+
+        [Required]
+        public string Telefone { get; set; } = string.Empty;
+
+        public DateTime DataNasc { get; set; }
+
+        public string? Endereco { get; set; } = string.Empty;
+
+        public bool Ativo { get; set; } = true;
+
+        public DateTime CriadoEm { get; set; } = DateTime.Now;
+
+
+    }
+}

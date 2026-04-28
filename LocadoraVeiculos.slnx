@@ -1,5 +1,6 @@
 <Solution>
   <Project Path="LocadoraVeiculos.API/LocadoraVeiculos.API.csproj" />
+  <Project Path="LocadoraVeiculos.Application/LocadoraVeiculos.Application.csproj" Id="02fc02de-bca6-496d-8755-697ecb6d00ab" />
   <Project Path="LocadoraVeiculos.Domain/LocadoraVeiculos.Domain.csproj" />
   <Project Path="LocadoraVeiculos.Entities/LocadoraVeiculos.Entities.csproj" />
   <Project Path="LocadoraVeiculos.Infrastructure/LocadoraVeiculos.Infrastructure.csproj" />

@@ -10,17 +10,22 @@ namespace LocadoraVeiculos.Infrastructure.Data
 {
     public class LocadoraContext(DbContextOptions<LocadoraContext> options) : IdentityDbContext<IdentityUser>(options)
     {
+
+        public DbSet<Cliente> Clientes { get; set; }
+        public DbSet<Veiculo> Veiculos { get; set; }
+        public DbSet<VeiculoAlocado> VeiculosAlocados { get; set; }
+
         protected override void OnModelCreating(ModelBuilder builder)
         {
             base.OnModelCreating(builder);
 
-            builder.Entity<User>().ToTable("Users");
+            builder.Entity<IdentityUser>().ToTable("Funcionarios");
             builder.Entity<IdentityRole>().ToTable("Roles");
-            builder.Entity<IdentityUserRole<string>>().ToTable("UserRoles");
-            builder.Entity<IdentityUserClaim<string>>().ToTable("UserClaims");
-            builder.Entity<IdentityUserLogin<string>>().ToTable("UserLogins");
+            builder.Entity<IdentityUserRole<string>>().ToTable("FuncionariosRoles");
+            builder.Entity<IdentityUserClaim<string>>().ToTable("FuncionariosClaims");
+            builder.Entity<IdentityUserLogin<string>>().ToTable("FuncionariosLogin");
             builder.Entity<IdentityRoleClaim<string>>().ToTable("RoleClaims");
-            builder.Entity<IdentityUserToken<string>>().ToTable("UserTokens");
+            builder.Entity<IdentityUserToken<string>>().ToTable("FuncionariosTokens");
 
             builder.Entity<User>(entity =>
             {
@@ -30,7 +35,7 @@ namespace LocadoraVeiculos.Infrastructure.Data
                 entity.Property(u => u.UserName).IsRequired().HasMaxLength(256);
                 entity.Property(u => u.NormalizedUserName).HasMaxLength(256);
 
-                entity.Property(u => u.PhoneNumber).HasMaxLength(20);
+                entity.Property(u => u.PhoneNumber).HasMaxLength(1);
 
                 entity.Property(u => u.PasswordHash).IsRequired().HasMaxLength(512);
                 entity.Property(u => u.SecurityStamp).HasMaxLength(256);
@@ -42,6 +47,11 @@ namespace LocadoraVeiculos.Infrastructure.Data
                 entity.Property(r => r.Name).IsRequired().HasMaxLength(256);
                 entity.Property(r => r.NormalizedName).HasMaxLength(256);
             });
+
+            builder.Entity<Cliente>().HasIndex(c => c.CPF).IsUnique();
+            builder.Entity<Cliente>().HasIndex(c => c.Email).IsUnique();
+
+            builder.Entity<CategoriaVeiculo>().HasIndex(c => c.Nome).IsUnique();
 
         }
     }

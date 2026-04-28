@@ -1,10 +1,13 @@
 using LocadoraVeiculos.Entities.Entities;
 using LocadoraVeiculos.Infrastructure.Data;
+using LocadoraVeiculos.Infrastructure.Identity;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
+
+builder.Services.AddHideEndpointsIdentityFilter();
 
 builder.Services.AddControllers();
 
@@ -40,7 +43,7 @@ app.UseHttpsRedirection();
 app.UseAuthentication();
 app.UseAuthorization();
 
-app.MapIdentityApi<User>();
+app.MapUserEndpoints();
 app.MapControllers();
 
 app.Run();

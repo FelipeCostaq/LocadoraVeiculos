@@ -11,8 +11,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace LocadoraVeiculos.Infrastructure.Migrations
 {
     [DbContext(typeof(LocadoraContext))]
-    [Migration("20260428190546_InitalCreate")]
-    partial class InitalCreate
+    [Migration("20260428215942_InitialMigrations")]
+    partial class InitialMigrations
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -44,7 +44,7 @@ namespace LocadoraVeiculos.Infrastructure.Migrations
                     b.HasIndex("Nome")
                         .IsUnique();
 
-                    b.ToTable("CategoriaVeiculo");
+                    b.ToTable("CategoriasVeiculo");
                 });
 
             modelBuilder.Entity("LocadoraVeiculos.Entities.Entities.Cliente", b =>

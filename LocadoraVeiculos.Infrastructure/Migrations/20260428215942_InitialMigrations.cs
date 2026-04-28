@@ -6,13 +6,13 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace LocadoraVeiculos.Infrastructure.Migrations
 {
     /// <inheritdoc />
-    public partial class InitalCreate : Migration
+    public partial class InitialMigrations : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.CreateTable(
-                name: "CategoriaVeiculo",
+                name: "CategoriasVeiculo",
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "TEXT", nullable: false),
@@ -23,7 +23,7 @@ namespace LocadoraVeiculos.Infrastructure.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_CategoriaVeiculo", x => x.Id);
+                    table.PrimaryKey("PK_CategoriasVeiculo", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -230,8 +230,8 @@ namespace LocadoraVeiculos.Infrastructure.Migrations
                 });
 
             migrationBuilder.CreateIndex(
-                name: "IX_CategoriaVeiculo_Nome",
-                table: "CategoriaVeiculo",
+                name: "IX_CategoriasVeiculo_Nome",
+                table: "CategoriasVeiculo",
                 column: "Nome",
                 unique: true);
 
@@ -289,7 +289,7 @@ namespace LocadoraVeiculos.Infrastructure.Migrations
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
-                name: "CategoriaVeiculo");
+                name: "CategoriasVeiculo");
 
             migrationBuilder.DropTable(
                 name: "Clientes");

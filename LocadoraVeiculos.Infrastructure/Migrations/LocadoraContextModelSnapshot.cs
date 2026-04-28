@@ -41,7 +41,7 @@ namespace LocadoraVeiculos.Infrastructure.Migrations
                     b.HasIndex("Nome")
                         .IsUnique();
 
-                    b.ToTable("CategoriaVeiculo");
+                    b.ToTable("CategoriasVeiculo");
                 });
 
             modelBuilder.Entity("LocadoraVeiculos.Entities.Entities.Cliente", b =>

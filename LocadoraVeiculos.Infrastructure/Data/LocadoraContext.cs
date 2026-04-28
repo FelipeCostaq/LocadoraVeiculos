@@ -14,6 +14,7 @@ namespace LocadoraVeiculos.Infrastructure.Data
         public DbSet<Cliente> Clientes { get; set; }
         public DbSet<Veiculo> Veiculos { get; set; }
         public DbSet<VeiculoAlocado> VeiculosAlocados { get; set; }
+        public DbSet<CategoriaVeiculo> CategoriasVeiculo { get; set; }
 
         protected override void OnModelCreating(ModelBuilder builder)
         {

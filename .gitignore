@@ -20,3 +20,5 @@ project.nuget.cache
 ## Publicação e arquivos temporários
 publish/
 *.log
+
+app.db

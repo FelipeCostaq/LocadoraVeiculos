@@ -20,7 +20,7 @@ namespace LocadoraVeiculos.Infrastructure.Repositories
         {
             using (var data = new LocadoraContext(_options))
             {
-                return await data.Clientes.ToListAsync();
+                return await data.Clientes.AsNoTracking().ToListAsync();
             }
         }
 

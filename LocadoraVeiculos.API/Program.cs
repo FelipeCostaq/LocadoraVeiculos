@@ -13,14 +13,14 @@ builder.Services.AddSwaggerGen();
 
 builder.Services.AddDbContext<LocadoraContext>(options => options.UseSqlite(builder.Configuration.GetConnectionString("DefaultConnection")));
 
+builder.Services
+    .AddIdentityApiEndpoints<User>()
+    .AddEntityFrameworkStores<LocadoraContext>();
+
 builder.Services.AddAuthentication();
 builder.Services.AddAuthorization();
 
 builder.Services.AddControllers();
-
-builder.Services
-    .AddIdentityApiEndpoints<User>()
-    .AddEntityFrameworkStores<LocadoraContext>();
 
 // Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
 builder.Services.AddOpenApi();

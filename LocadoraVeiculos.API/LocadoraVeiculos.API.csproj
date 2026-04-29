@@ -19,10 +19,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Controllers\" />
-  </ItemGroup>
-
-  <ItemGroup>
+    <ProjectReference Include="..\LocadoraVeiculos.Application\LocadoraVeiculos.Application.csproj" />
     <ProjectReference Include="..\LocadoraVeiculos.Infrastructure\LocadoraVeiculos.Infrastructure.csproj" />
   </ItemGroup>
 

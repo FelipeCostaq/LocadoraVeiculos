@@ -8,7 +8,7 @@ namespace LocadoraVeiculos.Entities.Entities
     public class CategoriaVeiculo
     {
         // PK
-        public Guid Id { get; set; } = Guid.Empty;
+        public Guid Id { get; set; } = Guid.CreateVersion7();
 
         [Required]
         public string Nome { get; set; } = string.Empty;

@@ -35,7 +35,7 @@ namespace LocadoraVeiculos.Infrastructure.Migrations
                     CPF = table.Column<string>(type: "TEXT", nullable: false),
                     Email = table.Column<string>(type: "TEXT", nullable: false),
                     Telefone = table.Column<string>(type: "TEXT", nullable: false),
-                    DataNasc = table.Column<DateTime>(type: "TEXT", nullable: false),
+                    DataNasc = table.Column<DateOnly>(type: "TEXT", nullable: false),
                     Endereco = table.Column<string>(type: "TEXT", nullable: true),
                     Ativo = table.Column<bool>(type: "INTEGER", nullable: false),
                     CriadoEm = table.Column<DateTime>(type: "TEXT", nullable: false)

@@ -60,7 +60,7 @@ namespace LocadoraVeiculos.Infrastructure.Migrations
                     b.Property<DateTime>("CriadoEm")
                         .HasColumnType("TEXT");
 
-                    b.Property<DateTime>("DataNasc")
+                    b.Property<DateOnly>("DataNasc")
                         .HasColumnType("TEXT");
 
                     b.Property<string>("Email")

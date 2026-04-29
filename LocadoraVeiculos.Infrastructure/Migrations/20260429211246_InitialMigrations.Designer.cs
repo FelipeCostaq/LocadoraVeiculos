@@ -11,7 +11,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace LocadoraVeiculos.Infrastructure.Migrations
 {
     [DbContext(typeof(LocadoraContext))]
-    [Migration("20260428215942_InitialMigrations")]
+    [Migration("20260429211246_InitialMigrations")]
     partial class InitialMigrations
     {
         /// <inheritdoc />
@@ -63,7 +63,7 @@ namespace LocadoraVeiculos.Infrastructure.Migrations
                     b.Property<DateTime>("CriadoEm")
                         .HasColumnType("TEXT");
 
-                    b.Property<DateTime>("DataNasc")
+                    b.Property<DateOnly>("DataNasc")
                         .HasColumnType("TEXT");
 
                     b.Property<string>("Email")

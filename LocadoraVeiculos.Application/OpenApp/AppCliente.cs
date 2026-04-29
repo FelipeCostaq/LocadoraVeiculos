@@ -1,0 +1,44 @@
+﻿using LocadoraVeiculos.Application.DTOs;
+using LocadoraVeiculos.Application.Interfaces;
+using LocadoraVeiculos.Domain.Interfaces.InterfaceCliente;
+using LocadoraVeiculos.Domain.Interfaces.InterfaceServices;
+using LocadoraVeiculos.Entities.Entities;
+
+namespace LocadoraVeiculos.Application.OpenApp;
+
+public class AppCliente : InterfaceClienteApp
+{
+    ICliente _icliente;
+    IServiceCliente _iserviceCliente;
+
+    public AppCliente(ICliente icliente, IServiceCliente iserviceCliente)
+    {
+        _icliente = icliente;
+        _iserviceCliente = iserviceCliente;
+    }
+    
+    
+    public async Task AdicionarCliente(RequestAdicionarClienteDTO clienteDto)
+    {
+        await _icliente.AdicionarCliente(clienteDto);
+    }
+
+    public async Task EditarCliente(Guid id, RequestEditarClienteDTO clienteDto)
+    {
+        await _icliente.EditarCliente(id, clienteDto);
+    }
+
+    public async Task<List<Cliente>> ListarClientes()
+    {
+        var clientes = await _icliente.ListarClientes();
+        
+        return clientes;
+    }
+
+    public async Task<Cliente> ListarClientePorId(Guid id)
+    {
+        var cliente = await _icliente.ListarClientePorId(id);
+        
+        return cliente;
+    }
+}

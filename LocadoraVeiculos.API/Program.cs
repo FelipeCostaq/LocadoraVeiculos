@@ -1,6 +1,14 @@
+using LocadoraVeiculos.Application.Interfaces;
+using LocadoraVeiculos.Application.OpenApp;
+using LocadoraVeiculos.Domain.Interfaces.Generics;
+using LocadoraVeiculos.Domain.Interfaces.InterfaceCliente;
+using LocadoraVeiculos.Domain.Interfaces.InterfaceServices;
+using LocadoraVeiculos.Domain.Services;
 using LocadoraVeiculos.Entities.Entities;
 using LocadoraVeiculos.Infrastructure.Data;
 using LocadoraVeiculos.Infrastructure.Identity;
+using LocadoraVeiculos.Infrastructure.Repositories;
+using LocadoraVeiculos.Infrastructure.Repositories.Generics;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -19,6 +27,14 @@ builder.Services.AddDbContext<LocadoraContext>(options => options.UseSqlite(buil
 builder.Services
     .AddIdentityApiEndpoints<User>()
     .AddEntityFrameworkStores<LocadoraContext>();
+
+builder.Services.AddSingleton(typeof(IGenerics<>), typeof(RepositoryGenerics<>));
+
+// Cliente dependency injection
+builder.Services.AddScoped<ICliente, RepositoryCliente>();
+builder.Services.AddScoped<InterfaceClienteApp, AppCliente>();
+builder.Services.AddScoped<IServiceCliente, ServiceCliente>();
+builder.Services.AddScoped<ServiceCliente>();
 
 builder.Services.AddAuthentication();
 builder.Services.AddAuthorization();

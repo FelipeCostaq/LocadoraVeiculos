@@ -9,7 +9,7 @@ namespace LocadoraVeiculos.Entities.Entities
 {
     public class VeiculoAlocado
     {
-        public Guid Id { get; set; } = Guid.Empty;
+        public Guid Id { get; set; } = Guid.CreateVersion7();
 
         [ForeignKey("Cliente")]
         [Required]

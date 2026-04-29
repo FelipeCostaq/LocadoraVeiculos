@@ -8,7 +8,7 @@ namespace LocadoraVeiculos.Entities.Entities
     public class Cliente
     {
         // PK
-        public Guid Id { get; set; }
+        public Guid Id { get; set; } = Guid.CreateVersion7();
 
         [Required]
         [MaxLength(150)]
@@ -25,7 +25,7 @@ namespace LocadoraVeiculos.Entities.Entities
         [Required]
         public string Telefone { get; set; } = string.Empty;
 
-        public DateTime DataNasc { get; set; }
+        public DateOnly DataNasc { get; set; } 
 
         public string? Endereco { get; set; } = string.Empty;
 

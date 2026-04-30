@@ -1,8 +1,10 @@
 using LocadoraVeiculos.Application.Interfaces;
 using LocadoraVeiculos.Application.OpenApp;
 using LocadoraVeiculos.Domain.Interfaces.Generics;
+using LocadoraVeiculos.Domain.Interfaces.InterfaceCategoriaVeiculo;
 using LocadoraVeiculos.Domain.Interfaces.InterfaceCliente;
 using LocadoraVeiculos.Domain.Interfaces.InterfaceServices;
+using LocadoraVeiculos.Domain.Interfaces.InterfaceVeiculo;
 using LocadoraVeiculos.Domain.Services;
 using LocadoraVeiculos.Entities.Entities;
 using LocadoraVeiculos.Infrastructure.Data;
@@ -35,6 +37,18 @@ builder.Services.AddScoped<ICliente, RepositoryCliente>();
 builder.Services.AddScoped<InterfaceClienteApp, AppCliente>();
 builder.Services.AddScoped<IServiceCliente, ServiceCliente>();
 builder.Services.AddScoped<ServiceCliente>();
+
+// Categorias Veiculo dependency injection
+builder.Services.AddScoped<ICategoriaVeiculo, RepositoryCategoriaVeiculo>();
+builder.Services.AddScoped<InterfaceCategoriaVeiculoApp, AppCategoriaVeiculo>();
+builder.Services.AddScoped<IServiceCategoriaVeiculo, ServiceCategoriaVeiculo>();
+builder.Services.AddScoped<ServiceCategoriaVeiculo>();
+
+// Veiculo dependency injection
+builder.Services.AddScoped<IVeiculo, RepositoryVeiculo>();
+builder.Services.AddScoped<InterfaceVeiculoApp, AppVeiculo>();
+builder.Services.AddScoped<IServiceVeiculo, ServiceVeiculo>();
+builder.Services.AddScoped<ServiceVeiculo>();
 
 builder.Services.AddAuthentication();
 builder.Services.AddAuthorization();

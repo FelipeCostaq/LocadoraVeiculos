@@ -4,10 +4,14 @@ using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Text;
+using LocadoraVeiculos.Application.DTOs;
+using LocadoraVeiculos.Domain.Interfaces.InterfaceCategoriaVeiculo;
+using LocadoraVeiculos.Domain.Interfaces.InterfaceCliente;
+using LocadoraVeiculos.Infrastructure.Repositories.Generics;
 
 namespace LocadoraVeiculos.Infrastructure.Repositories
 {
-    public class RepositoryCategoriaVeiculo
+    public class RepositoryCategoriaVeiculo : RepositoryGenerics<CategoriaVeiculo>, ICategoriaVeiculo
     {
         private readonly DbContextOptions<LocadoraContext> _options;
 
@@ -16,7 +20,40 @@ namespace LocadoraVeiculos.Infrastructure.Repositories
             _options = options;
         }
 
-        public async Task<List<CategoriaVeiculo>> ListarCategoriasVeiculos()
+        public async Task AdicionarCategoriaVeiculo(RequestAdicionarCategoriaVeiculoDTO categoriaVeiculoDto)
+        {
+            using (var data = new LocadoraContext(_options))
+            {
+                CategoriaVeiculo categoriaVeiculo = new CategoriaVeiculo
+                {
+                    Nome = categoriaVeiculoDto.Nome.ToUpper(),
+                    Descricao = categoriaVeiculoDto.Descricao,
+                    ValorDiaria = categoriaVeiculoDto.ValorDiaria
+                };
+                
+                await data.AddAsync(categoriaVeiculo);
+
+                await data.SaveChangesAsync();
+            }
+        }
+        
+        public async Task EditarCategoriaVeiculo(Guid id, RequestEditarCategoriaVeiculoDTO categoriaVeiculoDto)
+        {
+            using (var data = new LocadoraContext(_options))
+            {
+                var categoriaVeiculoAntigo = await data.CategoriasVeiculo.FindAsync(id);
+
+
+                categoriaVeiculoAntigo.Nome = categoriaVeiculoDto.Nome.ToUpper();
+                categoriaVeiculoAntigo.Descricao = categoriaVeiculoDto.Descricao;
+                categoriaVeiculoAntigo.ValorDiaria = categoriaVeiculoDto.ValorDiaria;
+                categoriaVeiculoAntigo.Ativo = categoriaVeiculoDto.Ativo;
+
+                await data.SaveChangesAsync();
+            }
+        }
+
+        public async Task<List<CategoriaVeiculo>> ListarCategoriasVeiculo()
         {
             using (var data = new LocadoraContext(_options))
             {

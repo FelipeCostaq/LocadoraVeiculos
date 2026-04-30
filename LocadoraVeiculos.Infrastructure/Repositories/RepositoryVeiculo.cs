@@ -4,16 +4,62 @@ using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Text;
+using LocadoraVeiculos.Application.DTOs;
+using LocadoraVeiculos.Domain.Interfaces.Generics;
+using LocadoraVeiculos.Domain.Interfaces.InterfaceVeiculo;
+using LocadoraVeiculos.Infrastructure.Repositories.Generics;
 
 namespace LocadoraVeiculos.Infrastructure.Repositories
 {
-    public class RepositoryVeiculo
+    public class RepositoryVeiculo : RepositoryGenerics<Veiculo>, IVeiculo
     {
         private readonly DbContextOptions<LocadoraContext> _options;
 
         public RepositoryVeiculo(DbContextOptions<LocadoraContext> options)
         {
             _options = options;
+        }
+
+        public async Task AdicionarVeiculo(RequestAdicionarVeiculoDTO veiculoDto)
+        {
+            using (var data = new LocadoraContext(_options))
+            {
+                Veiculo veiculo = new Veiculo
+                {
+                    Placa = veiculoDto.Placa.ToUpper(),
+                    Marca = veiculoDto.Marca,
+                    Modelo = veiculoDto.Modelo,
+                    Ano = veiculoDto.Ano,
+                    Cor = veiculoDto.Cor,
+                    CategoriaId =  veiculoDto.CategoriaId,
+                    ImagemUrl =  veiculoDto.ImagemUrl,
+                    Disponivel =  veiculoDto.Disponivel,
+                };
+                
+                await data.Veiculos.AddAsync(veiculo);
+
+                await data.SaveChangesAsync();
+            }
+        }
+
+        public async Task EditarVeiculo(Guid id, RequestEditarVeiculoDTO veiculoDto)
+        {
+            using (var data = new LocadoraContext(_options))
+            {
+                var veiculoAntigo = await data.Veiculos.FindAsync(id);
+
+                veiculoAntigo.Placa = veiculoDto.Placa;
+                veiculoAntigo.Marca = veiculoDto.Marca;
+                veiculoAntigo.Modelo = veiculoDto.Modelo;
+                veiculoAntigo.Ano = veiculoDto.Ano;
+                veiculoAntigo.Cor = veiculoDto.Cor;
+                veiculoAntigo.CategoriaId = veiculoDto.CategoriaId;
+                veiculoAntigo.ImagemUrl = veiculoDto.ImagemUrl;
+                veiculoAntigo.Ativo = veiculoDto.Ativo;
+                veiculoAntigo.Disponivel = veiculoDto.Disponivel;
+
+                await data.SaveChangesAsync();
+            }
         }
 
         public async Task<List<Veiculo>> ListarVeiculos()
@@ -28,7 +74,7 @@ namespace LocadoraVeiculos.Infrastructure.Repositories
         {
             using (var data = new LocadoraContext(_options))
             {
-                return await data.Veiculos.Where(v => v.Disponivel == true).ToListAsync();
+                return await data.Veiculos.AsNoTracking().Where(v => v.Disponivel == true).ToListAsync();
             }
         }
     }

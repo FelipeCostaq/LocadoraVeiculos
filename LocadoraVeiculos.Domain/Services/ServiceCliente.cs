@@ -16,7 +16,9 @@ public class ServiceCliente : IServiceCliente
     
     public async Task<bool> AdicionarCliente(RequestAdicionarClienteDTO clienteDto)
     {
-        if (DateTime.Now.Year - clienteDto.DataNasc.Year >= 18)
+        int idadeCliente = DateTime.Now.Year - clienteDto.DataNasc.Year;
+        
+        if (idadeCliente >= 18)
         {
             await _cliente.AdicionarCliente(clienteDto);
             return true;
@@ -27,7 +29,9 @@ public class ServiceCliente : IServiceCliente
 
     public async Task<bool> EditarCliente(Guid id, RequestEditarClienteDTO clienteDto)
     {
-        if (DateTime.Now.Year - clienteDto.DataNasc.Year >= 18 && clienteDto.Ativo)
+        int idadeCliente = DateTime.Now.Year - clienteDto.DataNasc.Year;
+        
+        if (idadeCliente >= 18)
         {
             await _cliente.EditarCliente(id, clienteDto);
 
@@ -35,19 +39,5 @@ public class ServiceCliente : IServiceCliente
         }
 
         return false;
-    }
-
-    public async Task<Cliente> ListarClientePorId(Guid id)
-    {
-        var cliente = await _cliente.ListarClientePorId(id);
-
-        return cliente;
-    }
-
-    public async Task<List<Cliente>> ListarClientes()
-    {
-        var clientes = await _cliente.ListarClientes();
-
-        return clientes;
     }
 }

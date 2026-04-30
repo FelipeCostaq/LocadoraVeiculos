@@ -44,23 +44,40 @@ public class ClienteController : ControllerBase
     [HttpPost("add")]
     public async Task<IActionResult> AdicionarCliente(RequestAdicionarClienteDTO clienteDto)
     {
-        var created = await _serviceCliente.AdicionarCliente(clienteDto);
+        try
+        {
+            var created = await _serviceCliente.AdicionarCliente(clienteDto);
+            
+            if (created)
+            {
+                return Created();
+            }
+        }
+        catch (Exception)
+        {
+            return BadRequest("Os campos CPF e Email devem ser únicos");
+        }
 
-        if (created)
-        {
-            return Created();
-        }
-        else
-        {
-            return BadRequest();
-        }
+        return BadRequest("A idade do cliente deve ser maior que 18 anos.");
     }
     
     [HttpPut("edit")]
     public async Task<IActionResult> EditarCliente(Guid id, RequestEditarClienteDTO clienteDto)
     {
-        await _serviceCliente.EditarCliente(id, clienteDto);
-        
-        return Ok();
+        try
+        {
+            var edited = await _serviceCliente.EditarCliente(id, clienteDto);
+            
+            if (edited)
+            {
+                return Created();
+            }
+        }
+        catch (Exception)
+        {
+            return BadRequest("Os campos CPF e Email devem ser únicos");
+        }
+
+        return BadRequest("A idade do cliente deve ser maior que 18 anos.");
     }
 }

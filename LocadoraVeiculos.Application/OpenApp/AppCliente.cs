@@ -8,8 +8,8 @@ namespace LocadoraVeiculos.Application.OpenApp;
 
 public class AppCliente : InterfaceClienteApp
 {
-    ICliente _icliente;
-    IServiceCliente _iserviceCliente;
+    private readonly ICliente _icliente;
+    private readonly IServiceCliente _iserviceCliente;
 
     public AppCliente(ICliente icliente, IServiceCliente iserviceCliente)
     {

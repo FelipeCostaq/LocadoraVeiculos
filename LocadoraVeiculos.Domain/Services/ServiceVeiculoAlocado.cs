@@ -19,15 +19,12 @@ namespace LocadoraVeiculos.Domain.Services
 
         public Task<bool> AdicionarVeiculoAlocado(RequestAdicionarVeiculoAlocadoDTO veiculoDto)
         {
-            if (veiculoDto.DataDevolução > veiculoDto.DataRetirada)
-            {
-
-            }
+            // Implementar Regra de Négocio
         }
 
         public Task<bool> DarBaixaVeiculoAlocado(Guid id)
         {
-            throw new NotImplementedException();
+            // Implementar Regra de Négocio
         }
     }
 }

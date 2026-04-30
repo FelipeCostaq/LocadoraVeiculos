@@ -25,7 +25,7 @@ namespace LocadoraVeiculos.Entities.Entities
 
         [ForeignKey("CategoriaVeiculo")]
         [Required]
-        public string CategoriaId { get; set; } = string.Empty;
+        public Guid CategoriaId { get; set; } = Guid.Empty;
 
         public string? ImagemUrl { get; set; } = string.Empty;
 

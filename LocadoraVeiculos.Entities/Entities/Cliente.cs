@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Text;
+using Microsoft.EntityFrameworkCore;
 
 namespace LocadoraVeiculos.Entities.Entities
 {
@@ -32,7 +33,5 @@ namespace LocadoraVeiculos.Entities.Entities
         public bool Ativo { get; set; } = true;
 
         public DateTime CriadoEm { get; set; } = DateTime.Now;
-
-
     }
 }

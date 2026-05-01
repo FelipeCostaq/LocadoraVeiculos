@@ -47,19 +47,14 @@ public class ClienteController : ControllerBase
     {
         try
         {
-            var created = await _serviceCliente.AdicionarCliente(clienteDto);
-            
-            if (created)
-            {
-                return Created();
-            }
-        }
-        catch (Exception)
-        {
-            return BadRequest("Os campos CPF e Email devem ser únicos");
-        }
+            await _serviceCliente.AdicionarCliente(clienteDto);
 
-        return BadRequest("A idade do cliente deve ser maior que 18 anos.");
+            return Created();
+        }
+        catch (Exception ex)
+        {
+            return BadRequest(new { mensagem = ex.Message });
+        }
     }
     
     [HttpPut("edit")]
@@ -68,19 +63,14 @@ public class ClienteController : ControllerBase
     {
         try
         {
-            var edited = await _serviceCliente.EditarCliente(id, clienteDto);
+            await _serviceCliente.EditarCliente(id, clienteDto);
             
-            if (edited)
-            {
-                return Created();
-            }
+            return Created();
         }
-        catch (Exception)
+        catch (Exception ex)
         {
-            return BadRequest("Os campos CPF e Email devem ser únicos");
+            return BadRequest(new { mensagem = ex.Message });
         }
-
-        return BadRequest("A idade do cliente deve ser maior que 18 anos.");
     }
 
     [HttpDelete]
@@ -89,18 +79,13 @@ public class ClienteController : ControllerBase
     {
         try
         {
-            var excluded = await _serviceCliente.ExcluirCliente(id);
+            await _serviceCliente.ExcluirCliente(id);
 
-            if (excluded)
-            {
-                return NoContent();
-            }
+            return NoContent();
         }
         catch (Exception ex)
         {
-            return BadRequest(ex);
+            return BadRequest(new { mensagem = ex.Message });
         }
-
-        return BadRequest("O cliente não pode ser deletado pois tem uma alocação ativa.");
     }
 }

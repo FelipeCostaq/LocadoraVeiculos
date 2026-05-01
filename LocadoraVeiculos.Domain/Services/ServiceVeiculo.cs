@@ -14,45 +14,35 @@ public class ServiceVeiculo : IServiceVeiculo
         _iveiculo = iveiculo;
     }
     
-    public async Task<bool> AdicionarVeiculo(RequestAdicionarVeiculoDTO veiculoDto)
+    public async Task AdicionarVeiculo(RequestAdicionarVeiculoDTO veiculoDto)
     {
-        if (veiculoDto.Ano >= 1990 && veiculoDto.Ano <= DateTime.Now.Year)
-        {
-            await _iveiculo.AdicionarVeiculo(veiculoDto);
+        if (!(veiculoDto.Ano >= 1990) && !(veiculoDto.Ano <= DateTime.Now.Year))
+            throw new Exception($"O ano do veículo deve estar entre 1990 e {DateTime.Now.Year}");
 
-            return true;
-        }
-        
-        return false;
+        await _iveiculo.AdicionarVeiculo(veiculoDto);
     }
 
-    public async Task<bool> EditarVeiculo(string placa, RequestEditarVeiculoDTO veiculoDto)
+    public async Task EditarVeiculo(string placa, RequestEditarVeiculoDTO veiculoDto)
     {
         Veiculo veiculo = await _iveiculo.ListarVeiculoPorId(placa);
 
-        // Verificar alteração do campo ativo enquanto o veículo está alocado.
         if (veiculoDto.Ativo == false && await _iveiculo.VeiculoLocacaoAtivo(placa))
-            return false;
+            throw new Exception("O status ativo do veículo não pode ser alterado enquanto ele está alocado.");
 
         // Caso o veículo seja desativado ele também fica indisponível.
         if (veiculoDto.Ativo == false)
             veiculoDto.Disponivel = false;
 
-        // Verificar alteração da categoria enquanto o veículo está alocado.
         if (veiculoDto.CategoriaId != veiculo.CategoriaId && await _iveiculo.VeiculoLocacaoAtivo(placa))
-            return false;
+            throw new Exception("A categoria do veículo não pode ser alterado enquanto ele está alocado.");
 
         // Verificar alteração do status Disponivel enquanto o veículo está alocado.
         if (veiculoDto.Disponivel != veiculo.Disponivel && await _iveiculo.VeiculoLocacaoAtivo(placa))
-            return false;
+            throw new Exception("O status disponível do veículo não pode ser alterado enquanto ele está alocado.");
 
-        if (veiculoDto.Ativo == false || (veiculoDto.Ano >= 1990 && veiculoDto.Ano <= DateTime.Now.Year))
-        {
-            await _iveiculo.EditarVeiculo(placa, veiculoDto);
-            
-            return true;
-        }
-        
-        return false;
+        if (!(veiculoDto.Ano >= 1990 && veiculoDto.Ano <= DateTime.Now.Year))
+            throw new Exception($"O ano do veículo deve estar entre 1990 e {DateTime.Now.Year}");
+
+        await _iveiculo.EditarVeiculo(placa, veiculoDto);
     }
 }

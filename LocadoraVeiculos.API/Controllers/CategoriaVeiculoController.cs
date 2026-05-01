@@ -34,19 +34,14 @@ public class CategoriaVeiculoController : ControllerBase
     {
         try
         {
-            var created = await _serviceCategoriaVeiculo.AdicionarCategoriaVeiculo(categoriaVeiculoDto);
-            
-            if (created)
-            {
-                return Created();
-            }
-        }
-        catch (Exception)
-        {
-            return BadRequest("O nome deve ser único.");
-        }
+            await _serviceCategoriaVeiculo.AdicionarCategoriaVeiculo(categoriaVeiculoDto);
 
-        return BadRequest("O valor da diária deve ser igual ou maior que 1.");
+            return Created();
+        }
+        catch (Exception ex)
+        {
+            return BadRequest(new { mensagem = ex.Message });
+        }
     }
     
     [HttpPut]
@@ -55,18 +50,13 @@ public class CategoriaVeiculoController : ControllerBase
     {
         try
         {
-            var edited = await _serviceCategoriaVeiculo.EditarCategoriaVeiculo(id, categoriaVeiculoDto);
+            await _serviceCategoriaVeiculo.EditarCategoriaVeiculo(id, categoriaVeiculoDto);
             
-            if (edited)
-            {
-                return Created();
-            }
+            return Created();
         }
-        catch (Exception)
+        catch (Exception ex)
         {
-            return BadRequest("O nome deve ser único.");
+            return BadRequest(new { mensagem = ex.Message });
         }
-
-        return BadRequest("O valor da diária deve ser igual ou maior que 1 e não é possível desativar uma categoria caso esteja vinculada a um veículo.");
     }
 }

@@ -18,45 +18,40 @@ namespace LocadoraVeiculos.Domain.Services
             _veiculoAlocado = veiculoAlocado;
         }
 
-        public async Task<bool> AdicionarVeiculoAlocado(RequestAdicionarVeiculoAlocadoDTO veiculoAlocadoDto)
+        public async Task AdicionarVeiculoAlocado(RequestAdicionarVeiculoAlocadoDTO veiculoAlocadoDto)
         {
             if (veiculoAlocadoDto.DataPrevDevol <= veiculoAlocadoDto.DataRetirada)
-                return false;
+                throw new Exception("A data prevista de devolução não pode ser antes da data de retirada.");
 
             bool veiculoDisponivel = await _veiculoAlocado.VerificarVeiculoLocacaoAtiva(veiculoAlocadoDto.PlacaVeiculo);
 
             bool clienteDisponivel = await _veiculoAlocado.VerificarClienteAtivo(veiculoAlocadoDto.ClienteId);
 
             if (!veiculoDisponivel || !clienteDisponivel)
-                return false;
-
+                throw new Exception("O veículo e o cliente precisa estar disponíveis para serem alocados.");
 
             await _veiculoAlocado.AdicionarVeiculoAlocado(veiculoAlocadoDto);
-
-            return true;
         }
 
-        public async Task<bool> CancelarVeiculoAlocado(Guid id)
+        public async Task CancelarVeiculoAlocado(Guid id)
         {
             var locacao = await _veiculoAlocado.ListarVeiculoAlocadoPorId(id);
 
             if (locacao == null)
-                return false;
+                throw new NullReferenceException("Nenhuma locação encontrada.");
 
             if (DateTime.Now >= locacao.DataRetirada)
-                return false;
+                throw new Exception("A locação não pode ser cancelada, pois, o veículo esta na data de retirada ou após a data de retirada.");
 
             await _veiculoAlocado.CancelarVeiculoAlocado(id);
-
-            return true;
         }
 
-        public async Task<bool> DarBaixaVeiculoAlocado(Guid id)
+        public async Task DarBaixaVeiculoAlocado(Guid id)
         {
             var locacao = await _veiculoAlocado.ListarVeiculoAlocadoPorId(id);
 
             if (locacao == null)
-                return false;
+                throw new NullReferenceException("Nenhuma locação encontrada.");
 
             locacao.DataDevolução = DateTime.Now;
 
@@ -71,8 +66,6 @@ namespace LocadoraVeiculos.Domain.Services
             locacao.Status = Status.Concluída;
 
             await _veiculoAlocado.DarBaixaVeiculoAlocado(id, locacao.ValorTotal);
-
-            return true;
         }
     }
 }

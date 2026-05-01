@@ -4,7 +4,7 @@ namespace LocadoraVeiculos.Domain.Interfaces.InterfaceServices;
 
 public interface IServiceVeiculo
 {
-    public Task<bool> AdicionarVeiculo(RequestAdicionarVeiculoDTO veiculoDto);
+    public Task AdicionarVeiculo(RequestAdicionarVeiculoDTO veiculoDto);
 
-    public Task<bool> EditarVeiculo(string placa, RequestEditarVeiculoDTO veiculoDto);
+    public Task EditarVeiculo(string placa, RequestEditarVeiculoDTO veiculoDto);
 }

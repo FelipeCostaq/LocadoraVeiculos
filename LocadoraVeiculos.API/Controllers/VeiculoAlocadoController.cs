@@ -42,17 +42,14 @@ namespace LocadoraVeiculos.API.Controllers
         {
             try
             {
-                var created = await _serviceVeiculoAlocado.AdicionarVeiculoAlocado(veiculoAlocadoDto);
+                await _serviceVeiculoAlocado.AdicionarVeiculoAlocado(veiculoAlocadoDto);
 
-                if (created)
-                    return Ok(veiculoAlocadoDto);
+                return Created();
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-                return BadRequest("O id do cliente e a placa do veículo devem ser válidos.");
+                return BadRequest(new { mensagem = ex.Message });
             }
-
-            return BadRequest("A data de devolução deve ser posterior a data de retirada. O veículo precisa estar disponível para ser alocado. O cliente e a placa precisam estar ativos");
         }
 
         [HttpPut("darbaixa")]
@@ -61,17 +58,14 @@ namespace LocadoraVeiculos.API.Controllers
         {
             try
             {
-                var created = await _serviceVeiculoAlocado.DarBaixaVeiculoAlocado(id);
+                await _serviceVeiculoAlocado.DarBaixaVeiculoAlocado(id);
 
-                if (created)
-                    return Ok();
+                return Ok();
             }
             catch (Exception ex)
             {
-                return BadRequest(ex);
+                return BadRequest(new { mensagem = ex.Message });
             }
-
-            return NotFound();
         }
 
         [HttpPut("cancelar")]
@@ -80,17 +74,14 @@ namespace LocadoraVeiculos.API.Controllers
         {
             try
             {
-                var created = await _serviceVeiculoAlocado.CancelarVeiculoAlocado(id);
+                await _serviceVeiculoAlocado.CancelarVeiculoAlocado(id);
 
-                if (created)
-                    return Ok();
+                return Ok();
             }
             catch (Exception ex)
             {
-                return BadRequest(ex);
+                return BadRequest(new { mensagem = ex.Message });
             }
-
-            return BadRequest("O cancelamento só pode ser feito caso a data de retirada não tenha chegado ainda.");
         }
     }
 }

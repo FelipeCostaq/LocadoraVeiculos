@@ -42,19 +42,14 @@ public class VeiculoController : ControllerBase
     {
         try
         {
-            var created = await _serviceVeiculo.AdicionarVeiculo(veiculoDto);
+            await _serviceVeiculo.AdicionarVeiculo(veiculoDto);
 
-            if (created)
-            {
-                return Created();
-            }
+            return Created();
         }
-        catch (Exception)
+        catch (Exception ex)
         {
-            return BadRequest("A placa do veículo precisa ser única.");
+            return BadRequest(new { mensagem = ex.Message });
         }
-
-        return BadRequest($"O ano do veículo precisa estar entre 1990 e {DateTime.Now.Year}");
     }
     
     [HttpPut]
@@ -63,18 +58,13 @@ public class VeiculoController : ControllerBase
     {
         try
         {
-            var edited = await _serviceVeiculo.EditarVeiculo(placa, veiculoDto);
+            await _serviceVeiculo.EditarVeiculo(placa, veiculoDto);
 
-            if (edited)
-            {
-                return Ok();
-            }
+            return Ok();
         }
         catch (Exception ex)
         {
-            return BadRequest("A placa do veículo precisa ser única.");
+            return BadRequest(new { mensagem = ex.Message });
         }
-
-        return BadRequest($"Um veículo para ser editado precisa estar com estado Ativo igual a false e o ano do veículo precisa estar entre 1990 e {DateTime.Now.Year}. Para alterar a categoria de um veículo ele não pode estar em uma locação.");
     }
 }

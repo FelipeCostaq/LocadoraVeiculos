@@ -27,6 +27,11 @@ public class AppVeiculo : InterfaceVeiculoApp
         await _iserviceVeiculo.EditarVeiculo(placa, veiculoDto);
     }
 
+    public async Task<Veiculo> ListarVeiculoPorId(string placa)
+    {
+        return await _iveiculo.ListarVeiculoPorId(placa);
+    }
+
     public Task<List<Veiculo>> ListarVeiculos()
     {
         return _iveiculo.ListarVeiculos();
@@ -35,5 +40,10 @@ public class AppVeiculo : InterfaceVeiculoApp
     public Task<List<Veiculo>> ListarVeiculosDisponiveis()
     {
         return _iveiculo.ListarVeiculosDisponiveis();
+    }
+
+    public Task<bool> VeiculoLocacaoAtivo(string placa)
+    {
+        return _iveiculo.VeiculoLocacaoAtivo(placa);
     }
 }

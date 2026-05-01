@@ -1,13 +1,14 @@
-﻿using LocadoraVeiculos.Entities.Entities;
-using LocadoraVeiculos.Infrastructure.Data;
-using Microsoft.EntityFrameworkCore;
-using System;
+﻿using System;
 using System.Collections.Generic;
+using System.Numerics;
 using System.Text;
 using LocadoraVeiculos.Application.DTOs;
 using LocadoraVeiculos.Domain.Interfaces.Generics;
 using LocadoraVeiculos.Domain.Interfaces.InterfaceVeiculo;
+using LocadoraVeiculos.Entities.Entities;
+using LocadoraVeiculos.Infrastructure.Data;
 using LocadoraVeiculos.Infrastructure.Repositories.Generics;
+using Microsoft.EntityFrameworkCore;
 
 namespace LocadoraVeiculos.Infrastructure.Repositories
 {
@@ -74,6 +75,22 @@ namespace LocadoraVeiculos.Infrastructure.Repositories
             using (var data = new LocadoraContext(_options))
             {
                 return await data.Veiculos.AsNoTracking().Where(v => v.Disponivel == true).ToListAsync();
+            }
+        }
+
+        public async Task<Veiculo> ListarVeiculoPorId(string placa)
+        {
+            using (var data = new LocadoraContext(_options))
+            {
+                return await data.Veiculos.FindAsync(placa);
+            }
+        }
+
+        public async Task<bool> VeiculoLocacaoAtivo(string placa)
+        {
+            using (var data = new LocadoraContext(_options))
+            {
+                return await data.VeiculosAlocados.AnyAsync(v => v.PlacaVeiculo == placa && v.Status == Entities.Enums.Status.Ativa);
             }
         }
     }

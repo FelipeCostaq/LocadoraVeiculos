@@ -9,4 +9,6 @@ public interface InterfaceVeiculoApp
     Task EditarVeiculo(string placa, RequestEditarVeiculoDTO veiculoDto);
     Task<List<Veiculo>> ListarVeiculos();
     Task<List<Veiculo>> ListarVeiculosDisponiveis();
+    Task<Veiculo> ListarVeiculoPorId(string placa);
+    Task<bool> VeiculoLocacaoAtivo(string placa);
 }

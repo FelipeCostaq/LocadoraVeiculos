@@ -22,6 +22,11 @@ public class AppCategoriaVeiculo : InterfaceCategoriaVeiculoApp
         await _iserviceCategoriaVeiculo.AdicionarCategoriaVeiculo(categoriaVeiculoDto);
     }
 
+    public async Task<bool> CategoriaEmUso(Guid id)
+    {
+        return await _icategoriaVeiculo.CategoriaEmUso(id);
+    }
+
     public async Task EditarCategoriaVeiculo(Guid id, RequestEditarCategoriaVeiculoDTO categoriaVeiculoDto)
     {
         await _icategoriaVeiculo.EditarCategoriaVeiculo(id, categoriaVeiculoDto);
@@ -29,8 +34,11 @@ public class AppCategoriaVeiculo : InterfaceCategoriaVeiculoApp
 
     public async Task<List<CategoriaVeiculo>> ListarCategoriasVeiculo()
     {
-        var categoriasVeiculos = await _icategoriaVeiculo.ListarCategoriasVeiculo();
-        
-        return categoriasVeiculos;
+        return await _icategoriaVeiculo.ListarCategoriasVeiculo();
+    }
+
+    public async Task<CategoriaVeiculo> ListarCategoriasVeiculoPorId(Guid id)
+    {
+        return await _icategoriaVeiculo.ListarCategoriasVeiculoPorId(id);
     }
 }

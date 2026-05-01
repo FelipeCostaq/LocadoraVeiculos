@@ -12,4 +12,8 @@ public interface IVeiculo
     public Task<List<Veiculo>> ListarVeiculos();
 
     public Task<List<Veiculo>> ListarVeiculosDisponiveis();
+
+    public Task<Veiculo> ListarVeiculoPorId(string placa);
+
+    public Task<bool> VeiculoLocacaoAtivo(string placa);
 }

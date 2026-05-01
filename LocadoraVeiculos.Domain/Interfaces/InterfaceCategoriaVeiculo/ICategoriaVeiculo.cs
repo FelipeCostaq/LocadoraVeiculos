@@ -11,4 +11,8 @@ public interface ICategoriaVeiculo : IGenerics<CategoriaVeiculo>
     public Task EditarCategoriaVeiculo(Guid id, RequestEditarCategoriaVeiculoDTO categoriaVeiculoDto);
 
     public Task<List<CategoriaVeiculo>> ListarCategoriasVeiculo();
+
+    public Task<bool> CategoriaEmUso(Guid id);
+
+    public Task<CategoriaVeiculo> ListarCategoriasVeiculoPorId(Guid id);
 }

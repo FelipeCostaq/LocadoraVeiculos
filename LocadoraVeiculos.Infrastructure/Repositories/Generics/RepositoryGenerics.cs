@@ -17,33 +17,14 @@ public class RepositoryGenerics<T> : IGenerics<T>, IDisposable where T : class
     {
         _OptionsBuilder = new DbContextOptions<LocadoraContext>();
     }
-
-
-    public async Task Add(T Objeto)
-    {
-        using (var data = new LocadoraContext(_OptionsBuilder))
-        {
-            await data.Set<T>().AddAsync(Objeto);
-            await data.SaveChangesAsync();
-        }  
-    }
-
-    public async Task Delete(T Objeto)
-    {
-        using (var data = new LocadoraContext(_OptionsBuilder))
-        {
-            data.Set<T>().Remove(Objeto);
-            await data.SaveChangesAsync();
-        }
-    }
     
     public async Task<T> GetEntityById(Guid Id)
     {
         using (var data = new LocadoraContext(_OptionsBuilder))
         {
-            var cliente = await data.Set<T>().FindAsync(Id);
+            var obj = await data.Set<T>().FindAsync(Id);
 
-            return cliente;
+            return obj;
         }
     }
 

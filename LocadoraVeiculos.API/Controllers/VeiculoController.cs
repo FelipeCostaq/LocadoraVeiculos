@@ -75,6 +75,6 @@ public class VeiculoController : ControllerBase
             return BadRequest("A placa do veículo precisa ser única.");
         }
 
-        return BadRequest($"Um veículo para ser editado precisa estar com estado Ativo igual a false e o ano do veículo precisa estar entre 1990 e {DateTime.Now.Year} ");
+        return BadRequest($"Um veículo para ser editado precisa estar com estado Ativo igual a false e o ano do veículo precisa estar entre 1990 e {DateTime.Now.Year}. Para alterar a categoria de um veículo ele não pode estar em uma locação.");
     }
 }

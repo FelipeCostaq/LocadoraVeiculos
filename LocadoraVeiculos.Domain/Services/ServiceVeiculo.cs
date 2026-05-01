@@ -25,11 +25,11 @@ public class ServiceVeiculo : IServiceVeiculo
         return false;
     }
 
-    public async Task<bool> EditarVeiculo(Guid id, RequestEditarVeiculoDTO veiculoDto)
+    public async Task<bool> EditarVeiculo(string placa, RequestEditarVeiculoDTO veiculoDto)
     {
         if (veiculoDto.Ativo == false || (veiculoDto.Ano >= 1990 && veiculoDto.Ano <= DateTime.Now.Year))
         {
-            await _iveiculo.EditarVeiculo(id, veiculoDto);
+            await _iveiculo.EditarVeiculo(placa, veiculoDto);
             
             return true;
         }

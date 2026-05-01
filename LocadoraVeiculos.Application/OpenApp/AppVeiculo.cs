@@ -22,9 +22,9 @@ public class AppVeiculo : InterfaceVeiculoApp
         await _iserviceVeiculo.AdicionarVeiculo(veiculoDto);
     }
 
-    public async Task EditarVeiculo(Guid id, RequestEditarVeiculoDTO veiculoDto)
+    public async Task EditarVeiculo(string placa, RequestEditarVeiculoDTO veiculoDto)
     {
-        await _iserviceVeiculo.EditarVeiculo(id, veiculoDto);
+        await _iserviceVeiculo.EditarVeiculo(placa, veiculoDto);
     }
 
     public Task<List<Veiculo>> ListarVeiculos()

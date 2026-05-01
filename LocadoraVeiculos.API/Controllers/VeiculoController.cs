@@ -59,18 +59,18 @@ public class VeiculoController : ControllerBase
     
     [HttpPut]
     [Authorize]
-    public async Task<IActionResult> EditarVeiculo(Guid id, RequestEditarVeiculoDTO veiculoDto)
+    public async Task<IActionResult> EditarVeiculo(string placa, RequestEditarVeiculoDTO veiculoDto)
     {
         try
         {
-            var edited = await _serviceVeiculo.EditarVeiculo(id, veiculoDto);
+            var edited = await _serviceVeiculo.EditarVeiculo(placa, veiculoDto);
 
             if (edited)
             {
                 return Ok();
             }
         }
-        catch (Exception)
+        catch (Exception ex)
         {
             return BadRequest("A placa do veículo precisa ser única.");
         }

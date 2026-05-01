@@ -11,10 +11,18 @@ namespace LocadoraVeiculos.Domain.Interfaces.InterfaceVeiculoAlocado
     {
         public Task AdicionarVeiculoAlocado(RequestAdicionarVeiculoAlocadoDTO veiculoDto);
 
-        public Task DarBaixaVeiculoAlocado(Guid id);
+        public Task DarBaixaVeiculoAlocado(Guid id, decimal valorTotalCalculado);
 
         public Task<List<VeiculoAlocado>> ListarVeiculosAlocados();
 
         public Task<List<VeiculoAlocado>> ListarVeiculosAlocadosDisponibilidade();
+
+        public Task<bool> VerificarVeiculoLocacaoAtiva(string placa);
+
+        public Task<bool> VerificarClienteAtivo(Guid id);
+
+        public Task<VeiculoAlocado> ListarVeiculoAlocadoPorId(Guid id);
+
+        public Task<decimal> ListarPrecoCategoriaVeiculo(string placa);
     }
 }

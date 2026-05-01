@@ -8,7 +8,7 @@ namespace LocadoraVeiculos.Domain.Interfaces.InterfaceServices
 {
     public interface IServiceVeiculoAlocado
     {
-        public Task<bool> AdicionarVeiculoAlocado(RequestAdicionarVeiculoAlocadoDTO veiculoDto);
+        public Task<bool> AdicionarVeiculoAlocado(RequestAdicionarVeiculoAlocadoDTO veiculoAlocadoDto);
 
         public Task<bool> DarBaixaVeiculoAlocado(Guid id);
     }

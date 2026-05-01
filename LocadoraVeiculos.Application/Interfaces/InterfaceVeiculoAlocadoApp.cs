@@ -9,9 +9,9 @@ namespace LocadoraVeiculos.Application.Interfaces
 {
     public interface InterfaceVeiculoAlocadoApp
     {
-        Task AdicionarVeiculo(RequestAdicionarVeiculoAlocadoDTO veiculoDto);
+        Task AdicionarVeiculoAlocado(RequestAdicionarVeiculoAlocadoDTO veiculoAlocadoDTO);
         Task DarBaixaVeiculoAlocado(Guid id);
-        Task<List<Veiculo>> ListarVeiculosAlocados();
-        Task<List<Veiculo>> ListarVeiculosAlocadosDisponibilidade();
+        Task<List<VeiculoAlocado>> ListarVeiculosAlocados();
+        Task<List<VeiculoAlocado>> ListarVeiculosAlocadosDisponibilidade();
     }
 }

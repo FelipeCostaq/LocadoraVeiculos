@@ -8,6 +8,7 @@ using LocadoraVeiculos.Entities.DTOs;
 namespace LocadoraVeiculos.API.Controllers
 {
     [ApiController]
+    [Route("veiculoalocado")]
     public class VeiculoAlocadoController : ControllerBase
     {
         public readonly InterfaceVeiculoAlocadoApp _interfaceVeiculoAlocadoApp;
@@ -39,14 +40,38 @@ namespace LocadoraVeiculos.API.Controllers
         [Authorize]
         public async Task<IActionResult> AdicionarVeiculoAlocado(RequestAdicionarVeiculoAlocadoDTO veiculoAlocadoDto)
         {
-            // Implementar o service
+            try
+            {
+                var created = await _serviceVeiculoAlocado.AdicionarVeiculoAlocado(veiculoAlocadoDto);
+
+                if (created)
+                    return Ok(veiculoAlocadoDto);
+            }
+            catch (Exception)
+            {
+                return BadRequest("O id do cliente e a placa do veículo devem ser válidos.");
+            }
+
+            return BadRequest("A data de devolução deve ser posterior a data de retirada. O veículo precisa estar disponível para ser alocado. O cliente e a placa precisam estar ativos");
         }
 
         [HttpPut("darbaixa")]
         [Authorize]
         public async Task<IActionResult> DarBaixaVeiculoAlocado(Guid id)
         {
-            // Implementar o service
+            try
+            {
+                var created = await _serviceVeiculoAlocado.DarBaixaVeiculoAlocado(id);
+
+                if (created)
+                    return Ok();
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex);
+            }
+
+            return NotFound();
         }
     }
 }

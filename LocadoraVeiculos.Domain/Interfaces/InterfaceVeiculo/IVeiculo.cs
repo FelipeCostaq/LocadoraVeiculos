@@ -7,7 +7,7 @@ public interface IVeiculo
 {
     public Task AdicionarVeiculo(RequestAdicionarVeiculoDTO veiculoDto);
 
-    public Task EditarVeiculo(Guid id, RequestEditarVeiculoDTO veiculoDto);
+    public Task EditarVeiculo(string placa, RequestEditarVeiculoDTO veiculoDto);
 
     public Task<List<Veiculo>> ListarVeiculos();
 

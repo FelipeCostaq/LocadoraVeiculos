@@ -42,13 +42,12 @@ namespace LocadoraVeiculos.Infrastructure.Repositories
             }
         }
 
-        public async Task EditarVeiculo(Guid id, RequestEditarVeiculoDTO veiculoDto)
+        public async Task EditarVeiculo(string placa, RequestEditarVeiculoDTO veiculoDto)
         {
             using (var data = new LocadoraContext(_options))
             {
-                var veiculoAntigo = await data.Veiculos.FindAsync(id);
+                var veiculoAntigo = await data.Veiculos.FindAsync(placa);
 
-                veiculoAntigo.Placa = veiculoDto.Placa;
                 veiculoAntigo.Marca = veiculoDto.Marca;
                 veiculoAntigo.Modelo = veiculoDto.Modelo;
                 veiculoAntigo.Ano = veiculoDto.Ano;

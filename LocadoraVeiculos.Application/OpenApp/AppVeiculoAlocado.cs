@@ -1,6 +1,7 @@
 ﻿using LocadoraVeiculos.Application.Interfaces;
 using LocadoraVeiculos.Domain.Interfaces.InterfaceServices;
 using LocadoraVeiculos.Domain.Interfaces.InterfaceVeiculo;
+using LocadoraVeiculos.Domain.Interfaces.InterfaceVeiculoAlocado;
 using LocadoraVeiculos.Entities.DTOs;
 using LocadoraVeiculos.Entities.Entities;
 using System;
@@ -11,33 +12,33 @@ namespace LocadoraVeiculos.Application.OpenApp
 {
     public class AppVeiculoAlocado : InterfaceVeiculoAlocadoApp
     {
-        private readonly IVeiculoAlocado _iveiculo;
-        private readonly IServiceVeiculo _iserviceVeiculo;
+        private readonly IVeiculoAlocado _iveiculoAlocado;
+        private readonly IServiceVeiculoAlocado _iserviceVeiculoAlocado;
 
-        public AppVeiculo(IVeiculo iveiculo, IServiceVeiculo iserviceVeiculo)
+        public AppVeiculoAlocado(IVeiculoAlocado iveiculoAlocado, IServiceVeiculoAlocado iserviceVeiculoAlocado)
         {
-            _iveiculo = iveiculo;
-            _iserviceVeiculo = iserviceVeiculo;
+            _iveiculoAlocado = iveiculoAlocado;
+            _iserviceVeiculoAlocado = iserviceVeiculoAlocado;
         }
 
-        public Task AdicionarVeiculo(RequestAdicionarVeiculoAlocadoDTO veiculoDto)
+        public async Task AdicionarVeiculoAlocado(RequestAdicionarVeiculoAlocadoDTO veiculoAlocadoDTO)
         {
-            throw new NotImplementedException();
+            await _iserviceVeiculoAlocado.AdicionarVeiculoAlocado(veiculoAlocadoDTO);
         }
 
-        public Task DarBaixaVeiculoAlocado(Guid id)
+        public async Task DarBaixaVeiculoAlocado(Guid id)
         {
-            throw new NotImplementedException();
+            await _iserviceVeiculoAlocado.DarBaixaVeiculoAlocado(id);
         }
 
-        public Task<List<Veiculo>> ListarVeiculosAlocados()
+        public async Task<List<VeiculoAlocado>> ListarVeiculosAlocados()
         {
-            throw new NotImplementedException();
+            return await _iveiculoAlocado.ListarVeiculosAlocados();
         }
 
-        public Task<List<Veiculo>> ListarVeiculosAlocadosDisponibilidade()
+        public async Task<List<VeiculoAlocado>> ListarVeiculosAlocadosDisponibilidade()
         {
-            throw new NotImplementedException();
+            return await _iveiculoAlocado.ListarVeiculosAlocadosDisponibilidade();
         }
     }
 }

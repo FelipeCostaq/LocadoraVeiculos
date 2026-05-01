@@ -2,6 +2,7 @@
 using LocadoraVeiculos.Domain.Interfaces.InterfaceServices;
 using LocadoraVeiculos.Domain.Interfaces.InterfaceVeiculoAlocado;
 using LocadoraVeiculos.Entities.DTOs;
+using LocadoraVeiculos.Entities.Enums;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -17,14 +18,46 @@ namespace LocadoraVeiculos.Domain.Services
             _veiculoAlocado = veiculoAlocado;
         }
 
-        public Task<bool> AdicionarVeiculoAlocado(RequestAdicionarVeiculoAlocadoDTO veiculoDto)
+        public async Task<bool> AdicionarVeiculoAlocado(RequestAdicionarVeiculoAlocadoDTO veiculoAlocadoDto)
         {
-            // Implementar Regra de Négocio
+            if (veiculoAlocadoDto.DataPrevDevol <= veiculoAlocadoDto.DataRetirada)
+                return false;
+
+            bool veiculoDisponivel = await _veiculoAlocado.VerificarVeiculoLocacaoAtiva(veiculoAlocadoDto.PlacaVeiculo);
+
+            bool clienteDisponivel = await _veiculoAlocado.VerificarClienteAtivo(veiculoAlocadoDto.ClienteId);
+
+            if (!veiculoDisponivel || !clienteDisponivel)
+                return false;
+
+
+            await _veiculoAlocado.AdicionarVeiculoAlocado(veiculoAlocadoDto);
+
+            return true;
         }
 
-        public Task<bool> DarBaixaVeiculoAlocado(Guid id)
+        public async Task<bool> DarBaixaVeiculoAlocado(Guid id)
         {
-            // Implementar Regra de Négocio
+            var locacao = await _veiculoAlocado.ListarVeiculoAlocadoPorId(id);
+
+            if (locacao == null)
+                return false;
+
+            locacao.DataDevolução = DateTime.Now;
+
+            int diasUtilizados = (locacao.DataDevolução.Date - locacao.DataRetirada.Date).Days;
+
+            if (diasUtilizados <= 0)
+                diasUtilizados = 1;
+
+            decimal precoDiaria = await _veiculoAlocado.ListarPrecoCategoriaVeiculo(locacao.PlacaVeiculo);
+            locacao.ValorTotal = diasUtilizados * precoDiaria;
+
+            locacao.Status = Status.Concluída;
+
+            await _veiculoAlocado.DarBaixaVeiculoAlocado(id, locacao.ValorTotal);
+
+            return true;
         }
     }
 }

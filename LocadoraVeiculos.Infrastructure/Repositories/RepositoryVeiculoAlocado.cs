@@ -101,7 +101,7 @@ namespace LocadoraVeiculos.Infrastructure.Repositories
         {
             using (var data = new LocadoraContext(_options))
             {
-                return await data.Veiculos.AnyAsync(v => v.Placa == placa && v.Disponivel == true);
+                return await data.Veiculos.AnyAsync(v => v.Placa == placa && v.Disponivel == true && v.Ativo == true);
             }
         }
 

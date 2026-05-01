@@ -27,6 +27,11 @@ public class ServiceCliente : IServiceCliente
         return false;
     }
 
+    public async Task<bool> ClienteAlocacaoAtiva(Guid id)
+    {
+        return await _cliente.ClienteAlocacaoAtiva(id);
+    }
+
     public async Task<bool> EditarCliente(Guid id, RequestEditarClienteDTO clienteDto)
     {
         int idadeCliente = DateTime.Now.Year - clienteDto.DataNasc.Year;
@@ -39,5 +44,17 @@ public class ServiceCliente : IServiceCliente
         }
 
         return false;
+    }
+
+    public async Task<bool> ExcluirCliente(Guid id)
+    {
+        var cliente = await _cliente.ListarClientePorId(id);
+
+        if (await _cliente.ClienteAlocacaoAtiva(id))
+            return false;
+
+        await _cliente.ExcluirCliente(id);
+
+        return true;
     }
 }

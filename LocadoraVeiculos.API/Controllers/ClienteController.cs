@@ -42,6 +42,7 @@ public class ClienteController : ControllerBase
     }
 
     [HttpPost("add")]
+    [Authorize]
     public async Task<IActionResult> AdicionarCliente(RequestAdicionarClienteDTO clienteDto)
     {
         try
@@ -62,6 +63,7 @@ public class ClienteController : ControllerBase
     }
     
     [HttpPut("edit")]
+    [Authorize]
     public async Task<IActionResult> EditarCliente(Guid id, RequestEditarClienteDTO clienteDto)
     {
         try
@@ -79,5 +81,26 @@ public class ClienteController : ControllerBase
         }
 
         return BadRequest("A idade do cliente deve ser maior que 18 anos.");
+    }
+
+    [HttpDelete]
+    [Authorize]
+    public async Task<IActionResult> ExcluirCliente(Guid id)
+    {
+        try
+        {
+            var excluded = await _serviceCliente.ExcluirCliente(id);
+
+            if (excluded)
+            {
+                return NoContent();
+            }
+        }
+        catch (Exception ex)
+        {
+            return BadRequest(ex);
+        }
+
+        return BadRequest("O cliente não pode ser deletado pois tem uma alocação ativa.");
     }
 }

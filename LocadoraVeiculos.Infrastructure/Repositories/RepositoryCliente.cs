@@ -4,6 +4,7 @@ using Microsoft.EntityFrameworkCore;
 using LocadoraVeiculos.Application.DTOs;
 using LocadoraVeiculos.Domain.Interfaces.InterfaceCliente;
 using LocadoraVeiculos.Infrastructure.Repositories.Generics;
+using LocadoraVeiculos.Entities.Enums;
 
 namespace LocadoraVeiculos.Infrastructure.Repositories
 {
@@ -55,6 +56,18 @@ namespace LocadoraVeiculos.Infrastructure.Repositories
             }
         }
 
+        public async Task ExcluirCliente(Guid id)
+        {
+            using (var data = new LocadoraContext(_options))
+            {
+                Cliente cliente = await data.Clientes.FindAsync(id);
+
+                data.Clientes.Remove(cliente);
+
+                await data.SaveChangesAsync();
+            }
+        }
+
         public async Task<Cliente> ListarClientePorId(Guid id)
         {
             using (var data = new LocadoraContext(_options))
@@ -70,6 +83,14 @@ namespace LocadoraVeiculos.Infrastructure.Repositories
             using (var data = new LocadoraContext(_options))
             {
                 return await data.Clientes.AsNoTracking().ToListAsync();
+            }
+        }
+
+        public async Task<bool> ClienteAlocacaoAtiva(Guid id)
+        {
+            using (var data = new LocadoraContext(_options))
+            {
+                return await data.VeiculosAlocados.AnyAsync(v => v.ClienteId == id && v.Status == Status.Ativa);
             }
         }
     }

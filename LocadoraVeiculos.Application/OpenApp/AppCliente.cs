@@ -41,4 +41,9 @@ public class AppCliente : InterfaceClienteApp
         
         return cliente;
     }
+
+    public async Task ExcluirCliente(Guid id)
+    {
+        await _iserviceCliente.ExcluirCliente(id);
+    }
 }

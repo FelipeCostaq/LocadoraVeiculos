@@ -10,6 +10,10 @@ public interface ICliente : IGenerics<Cliente>
 
     public Task EditarCliente(Guid id, RequestEditarClienteDTO clienteDto);
 
+    public Task ExcluirCliente(Guid id);
+
+    public Task<bool> ClienteAlocacaoAtiva(Guid id);
+
     public Task<Cliente> ListarClientePorId(Guid id);
 
     public Task<List<Cliente>> ListarClientes();

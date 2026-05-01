@@ -73,5 +73,24 @@ namespace LocadoraVeiculos.API.Controllers
 
             return NotFound();
         }
+
+        [HttpPut("cancelar")]
+        [Authorize]
+        public async Task<IActionResult> CancelarVeiculoAlocado(Guid id)
+        {
+            try
+            {
+                var created = await _serviceVeiculoAlocado.CancelarVeiculoAlocado(id);
+
+                if (created)
+                    return Ok();
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex);
+            }
+
+            return BadRequest("O cancelamento só pode ser feito caso a data de retirada não tenha chegado ainda.");
+        }
     }
 }

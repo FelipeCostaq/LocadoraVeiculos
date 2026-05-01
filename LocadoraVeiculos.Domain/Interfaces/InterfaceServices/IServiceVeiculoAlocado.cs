@@ -11,5 +11,7 @@ namespace LocadoraVeiculos.Domain.Interfaces.InterfaceServices
         public Task<bool> AdicionarVeiculoAlocado(RequestAdicionarVeiculoAlocadoDTO veiculoAlocadoDto);
 
         public Task<bool> DarBaixaVeiculoAlocado(Guid id);
+
+        public Task<bool> CancelarVeiculoAlocado(Guid id);
     }
 }

@@ -130,5 +130,25 @@ namespace LocadoraVeiculos.Infrastructure.Repositories
                 return await data.Clientes.AnyAsync(v => v.Id == id && v.Ativo == true);
             }
         }
+
+        public async Task CancelarVeiculoAlocado(Guid id)
+        {
+            using (var data = new LocadoraContext(_options))
+            {
+                VeiculoAlocado veiculoAlocado = await data.VeiculosAlocados.FindAsync(id);
+
+                if (veiculoAlocado == null)
+                    return;
+
+                veiculoAlocado.Status = Status.Cancelada;
+
+                Veiculo veiculo = await data.Veiculos.FindAsync(veiculoAlocado.PlacaVeiculo);
+
+                if (veiculo != null)
+                    veiculo.Disponivel = true;
+
+                await data.SaveChangesAsync();
+            }
+        }
     }
 }

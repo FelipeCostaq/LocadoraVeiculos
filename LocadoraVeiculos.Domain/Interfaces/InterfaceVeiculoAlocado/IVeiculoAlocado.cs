@@ -24,5 +24,7 @@ namespace LocadoraVeiculos.Domain.Interfaces.InterfaceVeiculoAlocado
         public Task<VeiculoAlocado> ListarVeiculoAlocadoPorId(Guid id);
 
         public Task<decimal> ListarPrecoCategoriaVeiculo(string placa);
+
+        public Task CancelarVeiculoAlocado(Guid id);
     }
 }

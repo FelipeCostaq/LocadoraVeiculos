@@ -11,6 +11,7 @@ namespace LocadoraVeiculos.Application.Interfaces
     {
         Task AdicionarVeiculoAlocado(RequestAdicionarVeiculoAlocadoDTO veiculoAlocadoDTO);
         Task DarBaixaVeiculoAlocado(Guid id);
+        Task CancelarVeiculoAlocado(Guid id);
         Task<List<VeiculoAlocado>> ListarVeiculosAlocados();
         Task<List<VeiculoAlocado>> ListarVeiculosAlocadosDisponibilidade();
     }

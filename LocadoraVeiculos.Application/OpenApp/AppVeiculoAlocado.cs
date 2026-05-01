@@ -26,6 +26,11 @@ namespace LocadoraVeiculos.Application.OpenApp
             await _iserviceVeiculoAlocado.AdicionarVeiculoAlocado(veiculoAlocadoDTO);
         }
 
+        public async Task CancelarVeiculoAlocado(Guid id)
+        {
+            await _iserviceVeiculoAlocado.CancelarVeiculoAlocado(id);
+        }
+
         public async Task DarBaixaVeiculoAlocado(Guid id)
         {
             await _iserviceVeiculoAlocado.DarBaixaVeiculoAlocado(id);

@@ -24,10 +24,11 @@ builder.Services.AddCors(options =>
     options.AddPolicy("AllowFrontends",
         policy =>
         {
-            policy.WithOrigins("http://localhost:5173")
+            policy.WithOrigins("https://locadora-veiculos-flax.vercel.app", "http://localhost:5173")
                   .AllowAnyHeader()
                   .AllowAnyMethod()
-                  .AllowCredentials();
+                  .AllowCredentials()
+                  .SetPreflightMaxAge(TimeSpan.FromSeconds(3600));
         });
 });
 

@@ -36,6 +36,21 @@ namespace LocadoraVeiculos.Domain.Services
             return true;
         }
 
+        public async Task<bool> CancelarVeiculoAlocado(Guid id)
+        {
+            var locacao = await _veiculoAlocado.ListarVeiculoAlocadoPorId(id);
+
+            if (locacao == null)
+                return false;
+
+            if (DateTime.Now >= locacao.DataRetirada)
+                return false;
+
+            await _veiculoAlocado.CancelarVeiculoAlocado(id);
+
+            return true;
+        }
+
         public async Task<bool> DarBaixaVeiculoAlocado(Guid id)
         {
             var locacao = await _veiculoAlocado.ListarVeiculoAlocadoPorId(id);

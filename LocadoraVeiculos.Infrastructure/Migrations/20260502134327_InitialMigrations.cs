@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace LocadoraVeiculos.Infrastructure.Migrations
 {
     /// <inheritdoc />
-    public partial class Initial : Migration
+    public partial class InitialMigrations : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -50,7 +50,6 @@ namespace LocadoraVeiculos.Infrastructure.Migrations
                 columns: table => new
                 {
                     Id = table.Column<string>(type: "TEXT", nullable: false),
-                    Discriminator = table.Column<string>(type: "TEXT", maxLength: 13, nullable: false),
                     UserName = table.Column<string>(type: "TEXT", maxLength: 256, nullable: false),
                     NormalizedUserName = table.Column<string>(type: "TEXT", maxLength: 256, nullable: true),
                     Email = table.Column<string>(type: "TEXT", maxLength: 256, nullable: false),
@@ -228,6 +227,11 @@ namespace LocadoraVeiculos.Infrastructure.Migrations
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
+
+            migrationBuilder.InsertData(
+                table: "Funcionarios",
+                columns: new[] { "Id", "AccessFailedCount", "ConcurrencyStamp", "Email", "EmailConfirmed", "LockoutEnabled", "LockoutEnd", "NormalizedEmail", "NormalizedUserName", "PasswordHash", "PhoneNumber", "PhoneNumberConfirmed", "SecurityStamp", "TwoFactorEnabled", "UserName" },
+                values: new object[] { "59306041-3580-4963-8a3c-36a536f9c2d1", 0, "B2C5C9E5-0E2E-4D71-B534-1F677E57C361", "admin@locadora.com", true, false, null, "ADMIN@LOCADORA.COM", "ADMIN@LOCADORA.COM", "AQAAAAIAAYagAAAAEDR5uH5QYetcZL97TN4ulz3XbTSosmMO3Abgj+meSmnETFDFZAN1zH421oGcRN8dng==", null, false, "78377758-1936-4C5D-9150-70F071253C4D", false, "admin@locadora.com" });
 
             migrationBuilder.CreateIndex(
                 name: "IX_CategoriasVeiculo_Nome",

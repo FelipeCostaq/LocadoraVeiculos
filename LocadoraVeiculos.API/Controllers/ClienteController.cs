@@ -40,7 +40,6 @@ public class ClienteController : ControllerBase
     }
 
     [HttpPost("add")]
-    [Authorize]
     public async Task<IActionResult> AdicionarCliente(RequestAdicionarClienteDTO clienteDto)
     {
         try
@@ -56,7 +55,6 @@ public class ClienteController : ControllerBase
     }
     
     [HttpPut("edit")]
-    [Authorize]
     public async Task<IActionResult> EditarCliente(Guid id, RequestEditarClienteDTO clienteDto)
     {
         try
@@ -72,7 +70,6 @@ public class ClienteController : ControllerBase
     }
 
     [HttpDelete]
-    [Authorize]
     public async Task<IActionResult> ExcluirCliente(Guid id)
     {
         try

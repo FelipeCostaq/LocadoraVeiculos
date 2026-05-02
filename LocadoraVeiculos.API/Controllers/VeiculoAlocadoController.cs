@@ -19,6 +19,7 @@ namespace LocadoraVeiculos.API.Controllers
         }
 
         [HttpGet]
+        [Authorize]
         public async Task<IActionResult> ListarVeiculosAlocados()
         {
             var veiculosAlocados = await _interfaceVeiculoAlocadoApp.ListarVeiculosAlocados();

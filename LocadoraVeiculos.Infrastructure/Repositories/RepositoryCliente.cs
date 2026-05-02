@@ -25,7 +25,7 @@ namespace LocadoraVeiculos.Infrastructure.Repositories
                 Cliente cliente = new Cliente
                 {
                    Nome = clienteDto.Nome,
-                   CPF = clienteDto.CPF,
+                   CPF = clienteDto.CPF.Replace(".", "").Replace("-", ""),
                    Email = clienteDto.Email,
                    Telefone = clienteDto.Telefone,
                    DataNasc = clienteDto.DataNasc,
@@ -43,9 +43,12 @@ namespace LocadoraVeiculos.Infrastructure.Repositories
             using (var data = new LocadoraContext(_options))
             {
                 var clienteAntigo = await data.Clientes.FindAsync(id);
+
+                if (clienteAntigo is null)
+                    throw new NullReferenceException();
                 
                 clienteAntigo.Nome = clienteDto.Nome;
-                clienteAntigo.CPF = clienteDto.CPF;
+                clienteAntigo.CPF = clienteDto.CPF.Replace(".", "").Replace("-", "");
                 clienteAntigo.Email = clienteDto.Email;
                 clienteAntigo.DataNasc = clienteDto.DataNasc;
                 clienteAntigo.Endereco = clienteDto.Endereco;
@@ -61,6 +64,9 @@ namespace LocadoraVeiculos.Infrastructure.Repositories
             using (var data = new LocadoraContext(_options))
             {
                 Cliente cliente = await data.Clientes.FindAsync(id);
+                
+                if (cliente is null)
+                    throw new NullReferenceException();
 
                 data.Clientes.Remove(cliente);
 
@@ -73,6 +79,9 @@ namespace LocadoraVeiculos.Infrastructure.Repositories
             using (var data = new LocadoraContext(_options))
             {
                 var cliente = await data.Clientes.FindAsync(id);
+                
+                if (cliente is null)
+                    throw new NullReferenceException();
 
                 return cliente;
             }

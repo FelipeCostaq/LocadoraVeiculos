@@ -27,11 +27,11 @@ namespace LocadoraVeiculos.Infrastructure.Repositories
             {
                 Veiculo veiculo = new Veiculo
                 {
-                    Placa = veiculoDto.Placa.ToUpper(),
-                    Marca = veiculoDto.Marca,
-                    Modelo = veiculoDto.Modelo,
+                    Placa = veiculoDto.Placa.Replace("-", "").Replace(" ", "").ToUpper(),
+                    Marca = veiculoDto.Marca.ToUpper(),
+                    Modelo = veiculoDto.Modelo.ToUpper(),
                     Ano = veiculoDto.Ano,
-                    Cor = veiculoDto.Cor,
+                    Cor = veiculoDto.Cor.ToUpper(),
                     CategoriaId =  veiculoDto.CategoriaId,
                     ImagemUrl =  veiculoDto.ImagemUrl,
                     Disponivel =  veiculoDto.Disponivel,
@@ -49,10 +49,10 @@ namespace LocadoraVeiculos.Infrastructure.Repositories
             {
                 var veiculoAntigo = await data.Veiculos.FindAsync(placa);
 
-                veiculoAntigo.Marca = veiculoDto.Marca;
-                veiculoAntigo.Modelo = veiculoDto.Modelo;
+                veiculoAntigo.Marca = veiculoDto.Marca.ToUpper();
+                veiculoAntigo.Modelo = veiculoDto.Modelo.ToUpper();
                 veiculoAntigo.Ano = veiculoDto.Ano;
-                veiculoAntigo.Cor = veiculoDto.Cor;
+                veiculoAntigo.Cor = veiculoDto.Cor.ToUpper();
                 veiculoAntigo.CategoriaId = veiculoDto.CategoriaId;
                 veiculoAntigo.ImagemUrl = veiculoDto.ImagemUrl;
                 veiculoAntigo.Ativo = veiculoDto.Ativo;

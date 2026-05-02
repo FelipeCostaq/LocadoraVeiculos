@@ -1,4 +1,7 @@
-﻿namespace LocadoraVeiculos.Application.DTOs;
+﻿using System.ComponentModel.DataAnnotations.Schema;
+using Microsoft.AspNetCore.Http;
+
+namespace LocadoraVeiculos.Application.DTOs;
 
 public class RequestEditarVeiculoDTO
 {   
@@ -12,7 +15,10 @@ public class RequestEditarVeiculoDTO
 
     public Guid CategoriaId { get; set; } = Guid.Empty;
 
-    public string? ImagemUrl { get; set; } = string.Empty;
+    public IFormFile? Imagem { get; set; }
+    
+    [NotMapped]
+    public string? ImagemUrl { get; set; }
 
     public bool Disponivel { get; set; }
 

@@ -21,14 +21,14 @@ namespace LocadoraVeiculos.Domain.Services
         public async Task AdicionarVeiculoAlocado(RequestAdicionarVeiculoAlocadoDTO veiculoAlocadoDto)
         {
             if (veiculoAlocadoDto.DataPrevDevol <= veiculoAlocadoDto.DataRetirada)
-                throw new Exception("A data prevista de devolução não pode ser antes da data de retirada.");
+                throw new InvalidOperationException("A data prevista de devolução não pode ser antes da data de retirada.");
 
             bool veiculoDisponivel = await _veiculoAlocado.VerificarVeiculoLocacaoAtiva(veiculoAlocadoDto.PlacaVeiculo);
 
             bool clienteDisponivel = await _veiculoAlocado.VerificarClienteAtivo(veiculoAlocadoDto.ClienteId);
 
             if (!veiculoDisponivel || !clienteDisponivel)
-                throw new Exception("O veículo e o cliente precisa estar disponíveis para serem alocados.");
+                throw new InvalidOperationException("O veículo e o cliente precisa estar disponíveis para serem alocados.");
 
             await _veiculoAlocado.AdicionarVeiculoAlocado(veiculoAlocadoDto);
         }
@@ -41,7 +41,7 @@ namespace LocadoraVeiculos.Domain.Services
                 throw new NullReferenceException("Nenhuma locação encontrada.");
 
             if (DateTime.Now >= locacao.DataRetirada)
-                throw new Exception("A locação não pode ser cancelada, pois, o veículo esta na data de retirada ou após a data de retirada.");
+                throw new InvalidOperationException("A locação não pode ser cancelada, pois, o veículo esta na data de retirada ou após a data de retirada.");
 
             await _veiculoAlocado.CancelarVeiculoAlocado(id);
         }

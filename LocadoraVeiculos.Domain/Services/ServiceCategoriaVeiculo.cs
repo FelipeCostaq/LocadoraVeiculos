@@ -17,7 +17,7 @@ public class ServiceCategoriaVeiculo : IServiceCategoriaVeiculo
     public async Task AdicionarCategoriaVeiculo(RequestAdicionarCategoriaVeiculoDTO categoriaVeiculoDto)
     {
         if (categoriaVeiculoDto.ValorDiaria < 1)
-            throw new Exception("O valor da diária tem que ser igual ou superior a 1");
+            throw new InvalidOperationException("O valor da diária tem que ser igual ou superior a 1");
 
         await _icategoriaVeiculo.AdicionarCategoriaVeiculo(categoriaVeiculoDto);
     }
@@ -27,10 +27,10 @@ public class ServiceCategoriaVeiculo : IServiceCategoriaVeiculo
         CategoriaVeiculo categoriaVeiculo = await _icategoriaVeiculo.ListarCategoriasVeiculoPorId(id);
 
         if (categoriaVeiculo.Ativo != categoriaVeiculoDto.Ativo && await _icategoriaVeiculo.CategoriaEmUso(id))
-            throw new Exception("Não é possível mudar o status de uma categoria enquanto ela está vinculada com um veículo.");
+            throw new InvalidOperationException("Não é possível mudar o status de uma categoria enquanto ela está vinculada com um veículo.");
 
         if (categoriaVeiculoDto.ValorDiaria < 1)
-            throw new Exception("O valor da diária tem que ser igual ou superior a 1");
+            throw new InvalidOperationException("O valor da diária tem que ser igual ou superior a 1");
 
         await _icategoriaVeiculo.EditarCategoriaVeiculo(id, categoriaVeiculoDto);   
     }

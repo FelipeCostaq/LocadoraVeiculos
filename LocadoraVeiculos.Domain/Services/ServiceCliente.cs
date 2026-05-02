@@ -17,7 +17,7 @@ public class ServiceCliente : IServiceCliente
     public async Task AdicionarCliente(RequestAdicionarClienteDTO clienteDto)
     {
         if (!ValidarCpf(clienteDto.CPF))
-            throw new Exception("CPF inválido.");
+            throw new InvalidOperationException("CPF inválido.");
         
         int idadeCliente = DateTime.Today.Year - clienteDto.DataNasc.Year;
         
@@ -48,7 +48,7 @@ public class ServiceCliente : IServiceCliente
     public async Task EditarCliente(Guid id, RequestEditarClienteDTO clienteDto)
     {
         if (!ValidarCpf(clienteDto.CPF))
-            throw new Exception("CPF inválido.");
+            throw new InvalidOperationException("CPF inválido.");
         
         int idadeCliente = DateTime.Today.Year - clienteDto.DataNasc.Year;
         

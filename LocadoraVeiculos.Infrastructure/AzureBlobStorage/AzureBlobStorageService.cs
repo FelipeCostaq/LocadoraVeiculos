@@ -1,4 +1,5 @@
 ﻿using Azure.Storage.Blobs;
+using DotNetEnv;
 using LocadoraVeiculos.Domain.Interfaces.InterfaceServices;
 using Microsoft.Extensions.Configuration;
 
@@ -11,8 +12,10 @@ public class AzureBlobStorageService  : IServiceStorage
     
     public AzureBlobStorageService(IConfiguration configuration)
     {
-        _connectionString = configuration.GetValue<string>("AzureStorage:ConnectionString");
-        _containerName = configuration.GetValue<string>("AzureStorage:ContainerName");
+        Env.Load();
+
+        _connectionString = Env.GetString("AZURE_STORAGE_CONNECTION_STRING");
+        _containerName =  Env.GetString("AZURE_STORAGE_CONTAINER_NAME");
     }
 
     public async Task<string> UploadFileAsync(Stream fileStream, string fileName)

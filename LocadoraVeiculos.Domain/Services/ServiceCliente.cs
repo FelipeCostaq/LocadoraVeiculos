@@ -64,8 +64,7 @@ public class ServiceCliente : IServiceCliente
 
         if (!ValidarTelefoneFormatado(telefoneFormatado))
             throw new InvalidOperationException("Telefone inválido");
-
-        clienteDto.CPF = clienteDto.CPF.Replace(".", "").Replace("-", "");
+        
         clienteDto.Telefone = telefoneFormatado;
         
         await _cliente.EditarCliente(id, clienteDto);

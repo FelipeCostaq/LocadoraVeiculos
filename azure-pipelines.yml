@@ -1,0 +1,54 @@
+﻿trigger:
+  branches:
+    include:
+      - main
+
+pool:
+  name: 'AgenteLocal'
+
+variables:
+  dockerRegistryServiceConnection: 'ConexaoACR'
+  azureResourceManagerConnection: 'ConexaoAzure'
+  imageRepository: 'api-locadora' 
+  containerRegistry: 'acrlocadoraveiculos.azurecr.io' 
+  dockerfilePath: '$(Build.SourcesDirectory)/Dockerfile'
+  tag: '$(Build.BuildId)' 
+  resourceGroupName: 'DefaultResourceGroup-EUS'
+  containerAppName: 'api-locadora-veiculos'
+
+stages:
+  - stage: BuildAndPush
+    displayName: Build and Push Stage
+    jobs:
+      - job: BuildAndPush
+        displayName: Build e Push da Imagem
+        steps:
+          
+          - task: UseDotNet@2
+            displayName: 'Instalar .NET 10'
+            inputs:
+              packageType: 'sdk'
+              version: '10.x'
+          
+          - task: Docker@2
+            displayName: 'Build and push Docker image'
+            inputs:
+              command: buildAndPush
+              repository: $(imageRepository)
+              dockerfile: $(dockerfilePath)
+              containerRegistry: $(dockerRegistryServiceConnection)
+              tags: |
+                $(tag)
+                latest
+          
+          - task: AzureCLI@2
+            displayName: 'Atualizar Container App com a nova imagem'
+            inputs:
+              azureSubscription: $(azureResourceManagerConnection)
+              scriptType: 'bash'
+              scriptLocation: 'inlineScript'
+              inlineScript: |
+                az containerapp update \
+                  --name $(containerAppName) \
+                  --resource-group $(resourceGroupName) \
+                  --image $(containerRegistry)/$(imageRepository):$(tag)

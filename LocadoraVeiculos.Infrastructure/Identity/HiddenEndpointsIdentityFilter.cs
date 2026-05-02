@@ -15,18 +15,19 @@ namespace LocadoraVeiculos.Infrastructure.Identity
                 {
                     var hideRoutes = new[]
                     {
-                    "/auth/register",
-                    "/auth/refresh",
-                    "/auth/confirmEmail",
-                    "/auth/resendConfirmationEmail",
-                    "/auth/forgotPassword",
-                    "/auth/resetPassword",
-                    "/auth/manage/2fa",
+                    "auth/register",
+                    "auth/refresh",
+                    "auth/confirmEmail",
+                    "auth/resendConfirmationEmail",
+                    "auth/forgotPassword",
+                    "auth/resetPassword",
+                    "auth/manage/2fa"
                 };
 
                     foreach (var path in hideRoutes)
                     {
                         document.Paths.Remove(path);
+                        document.Paths.Remove("/" + path);
                     }
 
                     return Task.CompletedTask;

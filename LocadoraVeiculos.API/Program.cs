@@ -25,19 +25,15 @@ builder.Services.AddCors(options =>
         policy =>
         {
             policy.WithOrigins("https://locadora-veiculos-flax.vercel.app", "http://localhost:5173")
-                  .AllowAnyHeader()
-                  .AllowAnyMethod()
-                  .AllowCredentials()
-                  .SetPreflightMaxAge(TimeSpan.FromSeconds(3600));
+                .AllowAnyHeader()
+                .AllowAnyMethod()
+                .AllowCredentials();
         });
 });
 
 builder.Services.AddHideEndpointsIdentityFilter();
 
 builder.Services.AddControllers();
-
-builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen();
 
 builder.Services.AddDbContext<LocadoraContext>(options => options.UseSqlite(builder.Configuration.GetConnectionString("DefaultConnection")));
 
@@ -81,19 +77,43 @@ builder.Services.AddScoped<IServiceVeiculoAlocado, ServiceVeiculoAlocado>();
 builder.Services.AddAuthentication();
 builder.Services.AddAuthorization();
 
-builder.Services.AddControllers();
-
 // Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
 builder.Services.AddOpenApi();
 
 var app = builder.Build();
 
+var routesBlocked = new HashSet<string>(StringComparer.OrdinalIgnoreCase)
+{
+    "/auth/register",
+    "/auth/refresh",
+    "/auth/confirmEmail",
+    "/auth/resendConfirmationEmail",
+    "/auth/forgotPassword",
+    "/auth/resetPassword",
+    "/auth/manage/2fa",
+};
+
+app.Use(async (context, next) =>
+{
+    var path = context.Request.Path.Value;
+
+    if (path != null && routesBlocked.Contains(path))
+    {
+        context.Response.StatusCode = StatusCodes.Status405MethodNotAllowed;
+        return; 
+    }
+
+    await next(context);
+});
+
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
     app.MapOpenApi();
-    app.UseSwagger();
-    app.UseSwaggerUI();
+    app.UseSwaggerUI(options =>
+    {
+        options.SwaggerEndpoint("/openapi/v1.json", "v1");
+    });
 }
 
 app.UseCors("AllowFrontends");

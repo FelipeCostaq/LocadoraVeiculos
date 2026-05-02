@@ -54,9 +54,12 @@ namespace LocadoraVeiculos.Infrastructure.Repositories
                 veiculoAntigo.Ano = veiculoDto.Ano;
                 veiculoAntigo.Cor = veiculoDto.Cor.ToUpper();
                 veiculoAntigo.CategoriaId = veiculoDto.CategoriaId;
-                veiculoAntigo.ImagemUrl = veiculoDto.ImagemUrl;
                 veiculoAntigo.Ativo = veiculoDto.Ativo;
                 veiculoAntigo.Disponivel = veiculoDto.Disponivel;
+                
+                if (!string.IsNullOrEmpty(veiculoDto.ImagemUrl))
+                    veiculoAntigo.ImagemUrl = veiculoDto.ImagemUrl;
+                
 
                 await data.SaveChangesAsync();
             }

@@ -32,8 +32,4 @@ jobs:
           creds: ${{ secrets.AZURE_CREDENTIALS }}
       
       - name: Deploy to Container App
-        run: |
-          az containerapp update \
-            --name api-locadora-veiculos \
-            --resource-group rg-locadora-veiculos \
-            --image ${{ secrets.ACR_LOGIN_SERVER }}/api-locadora:${{ github.run_id }}
+        run: az containerapp update --name api-locadora-veiculos --resource-group DefaultResourceGroup-EUS --image ${{ secrets.ACR_LOGIN_SERVER }}/api-locadora:${{ github.run_id }}

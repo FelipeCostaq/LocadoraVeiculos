@@ -12,12 +12,10 @@ namespace LocadoraVeiculos.API.Controllers
     public class VeiculoAlocadoController : ControllerBase
     {
         public readonly InterfaceVeiculoAlocadoApp _interfaceVeiculoAlocadoApp;
-        public readonly ServiceVeiculoAlocado _serviceVeiculoAlocado;
 
-        public VeiculoAlocadoController(InterfaceVeiculoAlocadoApp interfaceVeiculoAlocadoApp, ServiceVeiculoAlocado serviceVeiculoAlocado)
+        public VeiculoAlocadoController(InterfaceVeiculoAlocadoApp interfaceVeiculoAlocadoApp)
         {
             _interfaceVeiculoAlocadoApp = interfaceVeiculoAlocadoApp;
-            _serviceVeiculoAlocado = serviceVeiculoAlocado;
         }
 
         [HttpGet]
@@ -42,7 +40,7 @@ namespace LocadoraVeiculos.API.Controllers
         {
             try
             {
-                await _serviceVeiculoAlocado.AdicionarVeiculoAlocado(veiculoAlocadoDto);
+                await _interfaceVeiculoAlocadoApp.AdicionarVeiculoAlocado(veiculoAlocadoDto);
 
                 return Created();
             }
@@ -58,7 +56,7 @@ namespace LocadoraVeiculos.API.Controllers
         {
             try
             {
-                await _serviceVeiculoAlocado.DarBaixaVeiculoAlocado(id);
+                await _interfaceVeiculoAlocadoApp.DarBaixaVeiculoAlocado(id);
 
                 return Ok();
             }
@@ -74,7 +72,7 @@ namespace LocadoraVeiculos.API.Controllers
         {
             try
             {
-                await _serviceVeiculoAlocado.CancelarVeiculoAlocado(id);
+                await _interfaceVeiculoAlocadoApp.CancelarVeiculoAlocado(id);
 
                 return Ok();
             }

@@ -20,12 +20,12 @@ public class AppCliente : InterfaceClienteApp
     
     public async Task AdicionarCliente(RequestAdicionarClienteDTO clienteDto)
     {
-        await _icliente.AdicionarCliente(clienteDto);
+        await _iserviceCliente.AdicionarCliente(clienteDto);
     }
 
     public async Task EditarCliente(Guid id, RequestEditarClienteDTO clienteDto)
     {
-        await _icliente.EditarCliente(id, clienteDto);
+        await _iserviceCliente.EditarCliente(id, clienteDto);
     }
 
     public async Task<List<Cliente>> ListarClientes()

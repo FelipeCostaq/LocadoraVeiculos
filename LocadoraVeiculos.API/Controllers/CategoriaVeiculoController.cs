@@ -12,12 +12,10 @@ namespace LocadoraVeiculos.API.Controllers;
 public class CategoriaVeiculoController : ControllerBase
 {
     public readonly InterfaceCategoriaVeiculoApp _interfaceCategoriaVeiculoApp;
-    public readonly ServiceCategoriaVeiculo _serviceCategoriaVeiculo;
 
-    public CategoriaVeiculoController(InterfaceCategoriaVeiculoApp interfaceCategoriaVeiculoApp, ServiceCategoriaVeiculo serviceCategoriaVeiculo)
+    public CategoriaVeiculoController(InterfaceCategoriaVeiculoApp interfaceCategoriaVeiculoApp)
     {
         _interfaceCategoriaVeiculoApp = interfaceCategoriaVeiculoApp;
-        _serviceCategoriaVeiculo = serviceCategoriaVeiculo;
     }
 
     [HttpGet]
@@ -34,7 +32,7 @@ public class CategoriaVeiculoController : ControllerBase
     {
         try
         {
-            await _serviceCategoriaVeiculo.AdicionarCategoriaVeiculo(categoriaVeiculoDto);
+            await _interfaceCategoriaVeiculoApp.AdicionarCategoriaVeiculo(categoriaVeiculoDto);
 
             return Created();
         }
@@ -50,7 +48,7 @@ public class CategoriaVeiculoController : ControllerBase
     {
         try
         {
-            await _serviceCategoriaVeiculo.EditarCategoriaVeiculo(id, categoriaVeiculoDto);
+            await _interfaceCategoriaVeiculoApp.EditarCategoriaVeiculo(id, categoriaVeiculoDto);
             
             return Created();
         }

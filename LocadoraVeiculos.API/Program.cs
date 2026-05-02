@@ -62,25 +62,21 @@ builder.Services.AddSingleton(typeof(IGenerics<>), typeof(RepositoryGenerics<>))
 builder.Services.AddScoped<ICliente, RepositoryCliente>();
 builder.Services.AddScoped<InterfaceClienteApp, AppCliente>();
 builder.Services.AddScoped<IServiceCliente, ServiceCliente>();
-builder.Services.AddScoped<ServiceCliente>();
 
 // Categorias Veiculo dependency injection
 builder.Services.AddScoped<ICategoriaVeiculo, RepositoryCategoriaVeiculo>();
 builder.Services.AddScoped<InterfaceCategoriaVeiculoApp, AppCategoriaVeiculo>();
 builder.Services.AddScoped<IServiceCategoriaVeiculo, ServiceCategoriaVeiculo>();
-builder.Services.AddScoped<ServiceCategoriaVeiculo>();
 
 // Veiculo dependency injection
 builder.Services.AddScoped<IVeiculo, RepositoryVeiculo>();
 builder.Services.AddScoped<InterfaceVeiculoApp, AppVeiculo>();
 builder.Services.AddScoped<IServiceVeiculo, ServiceVeiculo>();
-builder.Services.AddScoped<ServiceVeiculo>();
 
 // Veiculo Alocado dependency injection
 builder.Services.AddScoped<IVeiculoAlocado, RepositoryVeiculoAlocado>();
 builder.Services.AddScoped<InterfaceVeiculoAlocadoApp, AppVeiculoAlocado>();
 builder.Services.AddScoped<IServiceVeiculoAlocado, ServiceVeiculoAlocado>();
-builder.Services.AddScoped<ServiceVeiculoAlocado>();
 
 builder.Services.AddAuthentication();
 builder.Services.AddAuthorization();

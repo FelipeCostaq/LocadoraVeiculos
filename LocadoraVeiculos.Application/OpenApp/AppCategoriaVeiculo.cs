@@ -29,7 +29,7 @@ public class AppCategoriaVeiculo : InterfaceCategoriaVeiculoApp
 
     public async Task EditarCategoriaVeiculo(Guid id, RequestEditarCategoriaVeiculoDTO categoriaVeiculoDto)
     {
-        await _icategoriaVeiculo.EditarCategoriaVeiculo(id, categoriaVeiculoDto);
+        await _iserviceCategoriaVeiculo.EditarCategoriaVeiculo(id, categoriaVeiculoDto);
     }
 
     public async Task<List<CategoriaVeiculo>> ListarCategoriasVeiculo()

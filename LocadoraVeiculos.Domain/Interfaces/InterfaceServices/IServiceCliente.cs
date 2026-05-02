@@ -10,6 +10,4 @@ public interface IServiceCliente
     public Task EditarCliente(Guid id, RequestEditarClienteDTO clienteDto);
 
     public Task ExcluirCliente(Guid id);
-
-    public Task<bool> ClienteAlocacaoAtiva(Guid id);
 }

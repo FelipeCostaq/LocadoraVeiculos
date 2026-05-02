@@ -14,12 +14,10 @@ namespace LocadoraVeiculos.API.Controllers;
 public class ClienteController : ControllerBase
 {
     public readonly InterfaceClienteApp _interfaceClienteApp;
-    public readonly ServiceCliente _serviceCliente;
 
-    public ClienteController(InterfaceClienteApp interfaceClienteApp, ServiceCliente serviceCliente)
+    public ClienteController(InterfaceClienteApp interfaceClienteApp)
     {
         _interfaceClienteApp = interfaceClienteApp;
-        _serviceCliente = serviceCliente;
     }
 
     [HttpGet]
@@ -47,7 +45,7 @@ public class ClienteController : ControllerBase
     {
         try
         {
-            await _serviceCliente.AdicionarCliente(clienteDto);
+            await _interfaceClienteApp.AdicionarCliente(clienteDto);
 
             return Created();
         }
@@ -63,7 +61,7 @@ public class ClienteController : ControllerBase
     {
         try
         {
-            await _serviceCliente.EditarCliente(id, clienteDto);
+            await _interfaceClienteApp.EditarCliente(id, clienteDto);
             
             return Created();
         }
@@ -79,7 +77,7 @@ public class ClienteController : ControllerBase
     {
         try
         {
-            await _serviceCliente.ExcluirCliente(id);
+            await _interfaceClienteApp.ExcluirCliente(id);
 
             return NoContent();
         }

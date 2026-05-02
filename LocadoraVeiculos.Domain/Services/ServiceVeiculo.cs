@@ -22,6 +22,9 @@ public class ServiceVeiculo : IServiceVeiculo
         
         if (!ValidarPlaca(veiculoDto.Placa))
             throw new InvalidOperationException("Placa inválida");
+
+        if (!await _iveiculo.VeiculoCategoriaAtivo(veiculoDto.CategoriaId))
+            throw new InvalidOperationException("Não é possível atribuir uma categoria inativa em um veículo");
         
         await _iveiculo.AdicionarVeiculo(veiculoDto);
     }

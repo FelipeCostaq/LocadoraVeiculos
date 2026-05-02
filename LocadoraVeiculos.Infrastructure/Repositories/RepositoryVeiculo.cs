@@ -93,5 +93,13 @@ namespace LocadoraVeiculos.Infrastructure.Repositories
                 return await data.VeiculosAlocados.AnyAsync(v => v.PlacaVeiculo == placa && v.Status == Entities.Enums.Status.Ativa);
             }
         }
+
+        public async Task<bool> VeiculoCategoriaAtivo(Guid id)
+        {
+            using (var data = new LocadoraContext(_options))
+            {
+                return await data.CategoriasVeiculo.AnyAsync(c => c.Id == id && c.Ativo == true);
+            }
+        }
     }
 }

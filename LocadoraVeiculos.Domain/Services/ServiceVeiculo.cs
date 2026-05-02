@@ -9,15 +9,17 @@ namespace LocadoraVeiculos.Domain.Services;
 public class ServiceVeiculo : IServiceVeiculo
 {
     private readonly IVeiculo _iveiculo;
+    private readonly IServiceStorage _storage;
 
-    public ServiceVeiculo(IVeiculo iveiculo)
+    public ServiceVeiculo(IVeiculo iveiculo, IServiceStorage storage)
     {
         _iveiculo = iveiculo;
+        _storage = storage;
     }
     
     public async Task AdicionarVeiculo(RequestAdicionarVeiculoDTO veiculoDto)
     {
-        if (!(veiculoDto.Ano >= 1990) && !(veiculoDto.Ano <= DateTime.Now.Year))
+        if (veiculoDto.Ano < 1990 || veiculoDto.Ano > DateTime.Now.Year)
             throw new InvalidOperationException($"O ano do veículo deve estar entre 1990 e {DateTime.Now.Year}");
         
         if (!ValidarPlaca(veiculoDto.Placa))
@@ -25,6 +27,17 @@ public class ServiceVeiculo : IServiceVeiculo
 
         if (!await _iveiculo.VeiculoCategoriaAtivo(veiculoDto.CategoriaId))
             throw new InvalidOperationException("Não é possível atribuir uma categoria inativa em um veículo");
+        
+        string urlFinal = string.Empty;
+        
+        if (veiculoDto.Imagem is not null)
+        {
+            using var stream = veiculoDto.Imagem.OpenReadStream();
+            
+            urlFinal = await _storage.UploadFileAsync(stream, veiculoDto.Imagem.FileName);
+            
+            veiculoDto.ImagemUrl = urlFinal;
+        }
         
         await _iveiculo.AdicionarVeiculo(veiculoDto);
     }
@@ -46,11 +59,22 @@ public class ServiceVeiculo : IServiceVeiculo
         if (veiculoDto.Disponivel != veiculo.Disponivel && await _iveiculo.VeiculoLocacaoAtivo(placa))
             throw new InvalidOperationException("O status disponível do veículo não pode ser alterado enquanto ele está alocado.");
 
-        if (!(veiculoDto.Ano >= 1990 && veiculoDto.Ano <= DateTime.Now.Year))
+        if (veiculoDto.Ano < 1990 || veiculoDto.Ano > DateTime.Now.Year)
             throw new InvalidOperationException($"O ano do veículo deve estar entre 1990 e {DateTime.Now.Year}");
         
         if (!await _iveiculo.VeiculoCategoriaAtivo(veiculoDto.CategoriaId))
             throw new InvalidOperationException("Não é possível atribuir uma categoria inativa em um veículo");
+        
+        string urlFinal = string.Empty;
+        
+        if (veiculoDto.Imagem is not null)
+        {
+            using var stream = veiculoDto.Imagem.OpenReadStream();
+            
+            urlFinal = await _storage.UploadFileAsync(stream, veiculoDto.Imagem.FileName);
+            
+            veiculoDto.ImagemUrl = urlFinal;
+        }
 
         await _iveiculo.EditarVeiculo(placa, veiculoDto);
     }

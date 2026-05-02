@@ -1,0 +1,9 @@
+﻿**/.git
+**/.vs
+**/.vscode
+**/bin
+**/obj
+**/*.db
+**/*.db-journal
+Dockerfile
+node_modules

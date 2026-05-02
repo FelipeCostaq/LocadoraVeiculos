@@ -8,6 +8,7 @@ using LocadoraVeiculos.Domain.Interfaces.InterfaceVeiculo;
 using LocadoraVeiculos.Domain.Interfaces.InterfaceVeiculoAlocado;
 using LocadoraVeiculos.Domain.Services;
 using LocadoraVeiculos.Entities.Entities;
+using LocadoraVeiculos.Infrastructure.AzureBlobStorage;
 using LocadoraVeiculos.Infrastructure.Data;
 using LocadoraVeiculos.Infrastructure.Identity;
 using LocadoraVeiculos.Infrastructure.Repositories;
@@ -79,6 +80,9 @@ builder.Services.AddScoped<IVeiculoAlocado, RepositoryVeiculoAlocado>();
 builder.Services.AddScoped<InterfaceVeiculoAlocadoApp, AppVeiculoAlocado>();
 builder.Services.AddScoped<IServiceVeiculoAlocado, ServiceVeiculoAlocado>();
 
+// Blob Storage dependency injection
+builder.Services.AddScoped<IServiceStorage, AzureBlobStorageService>();
+
 builder.Services.AddAuthentication();
 builder.Services.AddAuthorization();
 
@@ -86,6 +90,12 @@ builder.Services.AddAuthorization();
 builder.Services.AddOpenApi();
 
 var app = builder.Build();
+
+using (var scope = app.Services.CreateScope())
+{
+    var db = scope.ServiceProvider.GetRequiredService<LocadoraContext>();
+    db.Database.Migrate();
+}
 
 var routesBlocked = new HashSet<string>(StringComparer.OrdinalIgnoreCase)
 {

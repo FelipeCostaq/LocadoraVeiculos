@@ -48,6 +48,9 @@ public class ServiceVeiculo : IServiceVeiculo
 
         if (!(veiculoDto.Ano >= 1990 && veiculoDto.Ano <= DateTime.Now.Year))
             throw new InvalidOperationException($"O ano do veículo deve estar entre 1990 e {DateTime.Now.Year}");
+        
+        if (!await _iveiculo.VeiculoCategoriaAtivo(veiculoDto.CategoriaId))
+            throw new InvalidOperationException("Não é possível atribuir uma categoria inativa em um veículo");
 
         await _iveiculo.EditarVeiculo(placa, veiculoDto);
     }

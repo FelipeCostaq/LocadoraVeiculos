@@ -13,6 +13,7 @@ using LocadoraVeiculos.Infrastructure.Identity;
 using LocadoraVeiculos.Infrastructure.Repositories;
 using LocadoraVeiculos.Infrastructure.Repositories.Generics;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Diagnostics;
 using Microsoft.Extensions.Options;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -35,7 +36,11 @@ builder.Services.AddHideEndpointsIdentityFilter();
 
 builder.Services.AddControllers();
 
-builder.Services.AddDbContext<LocadoraContext>(options => options.UseSqlite(builder.Configuration.GetConnectionString("DefaultConnection")));
+builder.Services.AddDbContext<LocadoraContext>(options =>
+{
+    options.UseSqlite(builder.Configuration.GetConnectionString("DefaultConnection"));
+    options.ConfigureWarnings(w => w.Ignore(RelationalEventId.PendingModelChangesWarning));
+});
 
 builder.Services
     .AddIdentityApiEndpoints<User>()

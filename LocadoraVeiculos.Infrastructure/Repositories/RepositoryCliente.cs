@@ -26,7 +26,7 @@ namespace LocadoraVeiculos.Infrastructure.Repositories
                 {
                    Nome = clienteDto.Nome,
                    CPF = clienteDto.CPF.Replace(".", "").Replace("-", ""),
-                   Email = clienteDto.Email,
+                   Email = clienteDto.Email.ToLower(),
                    Telefone = clienteDto.Telefone,
                    DataNasc = clienteDto.DataNasc,
                    Endereco = clienteDto.Endereco,

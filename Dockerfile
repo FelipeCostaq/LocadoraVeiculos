@@ -17,8 +17,6 @@ FROM mcr.microsoft.com/dotnet/aspnet:10.0 AS final
 WORKDIR /app
 COPY --from=build /app/publish .
 
-USER root
-RUN mkdir -p /app/data && chown -R $APP_UID:$APP_UID /app/data
 USER $APP_UID
 
 ENV ASPNETCORE_HTTP_PORTS=8080

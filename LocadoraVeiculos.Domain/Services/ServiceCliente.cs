@@ -1,4 +1,5 @@
-﻿using LocadoraVeiculos.Application.DTOs;
+﻿using System.Globalization;
+using LocadoraVeiculos.Application.DTOs;
 using LocadoraVeiculos.Domain.Interfaces.InterfaceCliente;
 using LocadoraVeiculos.Domain.Interfaces.InterfaceServices;
 using LocadoraVeiculos.Entities.Entities;
@@ -33,9 +34,9 @@ public class ServiceCliente : IServiceCliente
 
         if (!ValidarTelefoneFormatado(telefoneFormatado))
             throw new InvalidOperationException("Telefone inválido");
-
-        clienteDto.CPF = clienteDto.CPF.Replace(".", "").Replace("-", "");
+        
         clienteDto.Telefone = telefoneFormatado;
+        clienteDto.Nome = SanitizarNome(clienteDto.Nome);
         
         await _cliente.AdicionarCliente(clienteDto);
     }
@@ -66,6 +67,7 @@ public class ServiceCliente : IServiceCliente
             throw new InvalidOperationException("Telefone inválido");
         
         clienteDto.Telefone = telefoneFormatado;
+        clienteDto.Nome = SanitizarNome(clienteDto.Nome);
         
         await _cliente.EditarCliente(id, clienteDto);
     }
@@ -152,5 +154,15 @@ public class ServiceCliente : IServiceCliente
         if (telefoneLimpo.Length == 11 && telefoneLimpo[2] != '9') return false;
 
         return true;
+    }
+
+    public static string SanitizarNome(string nome)
+    {
+        nome = nome.ToLower();
+        
+        TextInfo textInfo = new CultureInfo("pt-BR", false).TextInfo;
+        string nomeLimpo = textInfo.ToTitleCase(nome);
+        
+        return nomeLimpo;
     }
 }

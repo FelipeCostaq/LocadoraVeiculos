@@ -49,7 +49,7 @@ namespace LocadoraVeiculos.Infrastructure.Repositories
                 
                 clienteAntigo.Nome = clienteDto.Nome;
                 clienteAntigo.CPF = clienteDto.CPF.Replace(".", "").Replace("-", "");
-                clienteAntigo.Email = clienteDto.Email;
+                clienteAntigo.Email = clienteDto.Email.ToLower();
                 clienteAntigo.DataNasc = clienteDto.DataNasc;
                 clienteAntigo.Endereco = clienteDto.Endereco;
                 clienteAntigo.Telefone = clienteDto.Telefone;

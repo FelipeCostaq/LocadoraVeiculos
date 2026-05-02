@@ -38,6 +38,9 @@ public class ServiceCliente : IServiceCliente
         clienteDto.Telefone = telefoneFormatado;
         clienteDto.Nome = SanitizarNome(clienteDto.Nome);
         
+        if(clienteDto.Endereco is not null)
+            clienteDto.Endereco = SanitizarEndereco(clienteDto.Endereco);
+        
         await _cliente.AdicionarCliente(clienteDto);
     }
 
@@ -68,6 +71,9 @@ public class ServiceCliente : IServiceCliente
         
         clienteDto.Telefone = telefoneFormatado;
         clienteDto.Nome = SanitizarNome(clienteDto.Nome);
+        
+        if(clienteDto.Endereco is not null)
+            clienteDto.Endereco = SanitizarEndereco(clienteDto.Endereco);
         
         await _cliente.EditarCliente(id, clienteDto);
     }
@@ -164,5 +170,15 @@ public class ServiceCliente : IServiceCliente
         string nomeLimpo = textInfo.ToTitleCase(nome);
         
         return nomeLimpo;
+    }
+    
+    public static string SanitizarEndereco(string endereco)
+    {
+        endereco = endereco.ToLower();
+        
+        TextInfo textInfo = new CultureInfo("pt-BR", false).TextInfo;
+        string enderecoLimpo = textInfo.ToTitleCase(endereco);
+        
+        return enderecoLimpo;
     }
 }

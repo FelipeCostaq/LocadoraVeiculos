@@ -75,6 +75,10 @@ public class ServiceVeiculo : IServiceVeiculo
             
             veiculoDto.ImagemUrl = urlFinal;
         }
+        else
+        {
+            veiculoDto.ImagemUrl = veiculo.ImagemUrl;
+        }
 
         await _iveiculo.EditarVeiculo(placa, veiculoDto);
     }

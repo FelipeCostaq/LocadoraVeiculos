@@ -20,15 +20,12 @@ public class ServiceCliente : IServiceCliente
         if (!ValidarCpf(clienteDto.CPF))
             throw new InvalidOperationException("CPF inválido.");
         
-        int idadeCliente = DateTime.Today.Year - clienteDto.DataNasc.Year;
-        
-        DateOnly today = DateOnly.FromDateTime(DateTime.Today);
-        
-        if (clienteDto.DataNasc > today.AddYears(-idadeCliente))
-            idadeCliente--;
-        
-        if (idadeCliente < 18)
+        DateOnly hoje = DateOnly.FromDateTime(DateTime.Today);
+        DateOnly dataLimite = hoje.AddYears(-18);
+
+        if (clienteDto.DataNasc > dataLimite)
             throw new InvalidOperationException("O cliente deve ter pelo menos 18 anos para ser cadastrado.");
+        
         
         string telefoneFormatado = SanitizarTelefone(clienteDto.Telefone);
 
@@ -54,14 +51,10 @@ public class ServiceCliente : IServiceCliente
         if (!ValidarCpf(clienteDto.CPF))
             throw new InvalidOperationException("CPF inválido.");
         
-        int idadeCliente = DateTime.Today.Year - clienteDto.DataNasc.Year;
-        
-        DateOnly today = DateOnly.FromDateTime(DateTime.Today);
-        
-        if (clienteDto.DataNasc > today.AddYears(-idadeCliente))
-            idadeCliente--;
-        
-        if (idadeCliente < 18)
+        DateOnly hoje = DateOnly.FromDateTime(DateTime.Today);
+        DateOnly dataLimite = hoje.AddYears(-18);
+
+        if (clienteDto.DataNasc > dataLimite)
             throw new InvalidOperationException("O cliente deve ter pelo menos 18 anos para ser cadastrado.");
         
         string telefoneFormatado = SanitizarTelefone(clienteDto.Telefone);

@@ -97,6 +97,10 @@ using (var scope = app.Services.CreateScope())
     db.Database.Migrate();
 }
 
+app.UseHttpsRedirection();
+
+app.UseCors("AllowFrontends");
+
 var routesBlocked = new HashSet<string>(StringComparer.OrdinalIgnoreCase)
 {
     "/auth/register",
@@ -130,10 +134,6 @@ if (app.Environment.IsDevelopment())
         options.SwaggerEndpoint("/openapi/v1.json", "v1");
     });
 }
-
-app.UseCors("AllowFrontends");
-
-app.UseHttpsRedirection();
     
 app.UseAuthentication();
 app.UseAuthorization();

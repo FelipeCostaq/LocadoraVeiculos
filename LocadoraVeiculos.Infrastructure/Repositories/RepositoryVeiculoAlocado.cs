@@ -14,141 +14,111 @@ namespace LocadoraVeiculos.Infrastructure.Repositories
 {
     public class RepositoryVeiculoAlocado : RepositoryGenerics<VeiculoAlocado>, IVeiculoAlocado
     {
-        private readonly DbContextOptions<LocadoraContext> _options;
+        private readonly LocadoraContext _context;
 
-        public RepositoryVeiculoAlocado(DbContextOptions<LocadoraContext> options)
+        public RepositoryVeiculoAlocado(LocadoraContext context)
         {
-            _options = options;
+            _context = context;
         }
 
         public async Task AdicionarVeiculoAlocado(RequestAdicionarVeiculoAlocadoDTO veiculoDto)
         {
-            using (var data = new LocadoraContext(_options))
+            VeiculoAlocado veiculoAlocado = new VeiculoAlocado
             {
-                VeiculoAlocado veiculoAlocado = new VeiculoAlocado
-                {
-                    ClienteId = veiculoDto.ClienteId,
-                    PlacaVeiculo = veiculoDto.PlacaVeiculo,
-                    DataRetirada = veiculoDto.DataRetirada,
-                    DataPrevDevol = veiculoDto.DataPrevDevol,
-                };
+                ClienteId = veiculoDto.ClienteId,
+                PlacaVeiculo = veiculoDto.PlacaVeiculo,
+                DataRetirada = veiculoDto.DataRetirada,
+                DataPrevDevol = veiculoDto.DataPrevDevol,
+            };
 
-                await data.VeiculosAlocados.AddAsync(veiculoAlocado);
+            _context.VeiculosAlocados.Add(veiculoAlocado);
 
-                Veiculo veiculo = await data.Veiculos.FindAsync(veiculoDto.PlacaVeiculo);
+            Veiculo veiculo = await _context.Veiculos.FindAsync(veiculoDto.PlacaVeiculo);
 
-                veiculo.Disponivel = false;
+            veiculo.Disponivel = false;
 
-                await data.SaveChangesAsync();
-            }
+            await _context.SaveChangesAsync();
         }
 
         public async Task DarBaixaVeiculoAlocado(Guid id, decimal valorTotalCalculado, DateTime dataDevolucao)
         {
-            using (var data = new LocadoraContext(_options))
-            {
-                VeiculoAlocado veiculoAlocado = await data.VeiculosAlocados.FindAsync(id);
+            VeiculoAlocado veiculoAlocado = await _context.VeiculosAlocados.FindAsync(id);
 
-                if (veiculoAlocado == null)
-                    return;
+            if (veiculoAlocado == null)
+                return;
 
-                veiculoAlocado.DataDevolução = dataDevolucao;
-                veiculoAlocado.Status = Status.Concluída;
+            veiculoAlocado.DataDevolução = dataDevolucao;
+            veiculoAlocado.Status = Status.Concluída;
 
-                veiculoAlocado.ValorTotal = valorTotalCalculado;
+            veiculoAlocado.ValorTotal = valorTotalCalculado;
 
-                Veiculo veiculo = await data.Veiculos.FindAsync(veiculoAlocado.PlacaVeiculo);
+            Veiculo veiculo = await _context.Veiculos.FindAsync(veiculoAlocado.PlacaVeiculo);
 
-                if (veiculo != null)
-                    veiculo.Disponivel = true;
+            if (veiculo is not null)
+                veiculo.Disponivel = true;
 
-                await data.SaveChangesAsync();
-            }
+            await _context.SaveChangesAsync();
         }
 
         public async Task<VeiculoAlocado> ListarVeiculoAlocadoPorId(Guid id)
         {
-            using (var data = new LocadoraContext(_options))
-            {
-                VeiculoAlocado veiculoAlocado = await data.VeiculosAlocados.FindAsync(id);
-
-                return veiculoAlocado;
-            }
+            return await _context.VeiculosAlocados.FindAsync(id);
         }
 
         public async Task<List<VeiculoAlocado>> ListarVeiculosAlocados()
         {
-            using (var data = new LocadoraContext(_options))
-            {
-                return await data.VeiculosAlocados.AsNoTracking().ToListAsync();
-            }
+            return await _context.VeiculosAlocados.AsNoTracking().ToListAsync();
         }
 
         public async Task<List<VeiculoAlocado>> ListarVeiculosAlocadosDisponibilidade()
         {
-            using (var data = new LocadoraContext(_options))
-            {
-
-                return await data.VeiculosAlocados.Select(v => new VeiculoAlocado()
+                return await _context.VeiculosAlocados.Select(v => new VeiculoAlocado
                 {
                     PlacaVeiculo = v.PlacaVeiculo,
                     Status = v.Status
                 }).AsNoTracking().ToListAsync();
-            }
         }
 
         public async Task<bool> VerificarVeiculoLocacaoAtiva(string placa)
         {
-            using (var data = new LocadoraContext(_options))
-            {
-                return await data.Veiculos.AnyAsync(v => v.Placa == placa && v.Disponivel == true && v.Ativo == true);
-            }
+            return await _context.Veiculos.AnyAsync(v => v.Placa == placa && v.Disponivel == true && v.Ativo == true);
         }
 
         public async Task<decimal> ListarPrecoCategoriaVeiculo(string placa)
         {
-            using (var data = new LocadoraContext(_options))
-            {
-                Guid categoriaId = await data.Veiculos
-                           .AsNoTracking()
-                           .Where(v => v.Placa == placa)
-                           .Select(v => v.CategoriaId)
-                           .FirstOrDefaultAsync();
+            Guid categoriaId = await _context.Veiculos
+                       .AsNoTracking()
+                       .Where(v => v.Placa == placa)
+                       .Select(v => v.CategoriaId)
+                       .FirstOrDefaultAsync();
 
-                CategoriaVeiculo categoria = await data.CategoriasVeiculo.FindAsync(categoriaId);
+            CategoriaVeiculo categoria = await _context.CategoriasVeiculo.FindAsync(categoriaId);
 
-                decimal preco = categoria.ValorDiaria;
+            decimal preco = categoria.ValorDiaria;
 
-                return preco;
-            }
+            return preco;
         }
 
         public async Task<bool> VerificarClienteAtivo(Guid id)
         {
-            using (var data = new LocadoraContext(_options))
-            {
-                return await data.Clientes.AnyAsync(v => v.Id == id && v.Ativo == true);
-            }
+            return await _context.Clientes.AnyAsync(v => v.Id == id && v.Ativo == true);
         }
 
         public async Task CancelarVeiculoAlocado(Guid id)
         {
-            using (var data = new LocadoraContext(_options))
-            {
-                VeiculoAlocado veiculoAlocado = await data.VeiculosAlocados.FindAsync(id);
+            VeiculoAlocado veiculoAlocado = await _context.VeiculosAlocados.FindAsync(id);
 
-                if (veiculoAlocado == null)
-                    return;
+            if (veiculoAlocado == null)
+                return;
 
-                veiculoAlocado.Status = Status.Cancelada;
+            veiculoAlocado.Status = Status.Cancelada;
 
-                Veiculo veiculo = await data.Veiculos.FindAsync(veiculoAlocado.PlacaVeiculo);
+            Veiculo veiculo = await _context.Veiculos.FindAsync(veiculoAlocado.PlacaVeiculo);
 
-                if (veiculo != null)
-                    veiculo.Disponivel = true;
+            if (veiculo != null)
+                veiculo.Disponivel = true;
 
-                await data.SaveChangesAsync();
-            }
+            await _context.SaveChangesAsync();
         }
     }
 }

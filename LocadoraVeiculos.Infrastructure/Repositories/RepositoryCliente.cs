@@ -10,97 +10,75 @@ namespace LocadoraVeiculos.Infrastructure.Repositories
 {
     public class RepositoryCliente : RepositoryGenerics<Cliente>, ICliente
     {
-        private readonly DbContextOptions<LocadoraContext> _options;
+        private readonly LocadoraContext _context;
 
-        public RepositoryCliente(DbContextOptions<LocadoraContext> options)
+        public RepositoryCliente(LocadoraContext context)
         {
-            _options = options;
+            _context = context;
         }
-        
 
         public async Task AdicionarCliente(RequestAdicionarClienteDTO clienteDto)
         {
-            using (var data = new LocadoraContext(_options))
+            Cliente cliente = new Cliente
             {
-                Cliente cliente = new Cliente
-                {
-                   Nome = clienteDto.Nome,
-                   CPF = clienteDto.CPF.Replace(".", "").Replace("-", ""),
-                   Email = clienteDto.Email.ToLower(),
-                   Telefone = clienteDto.Telefone,
-                   DataNasc = clienteDto.DataNasc,
-                   Endereco = clienteDto.Endereco,
-                };
-                
-                await data.Clientes.AddAsync(cliente);
-                
-                await data.SaveChangesAsync();
-            }
+               Nome = clienteDto.Nome,
+               CPF = clienteDto.CPF.Replace(".", "").Replace("-", ""),
+               Email = clienteDto.Email.ToLower(),
+               Telefone = clienteDto.Telefone,
+               DataNasc = clienteDto.DataNasc,
+               Endereco = clienteDto.Endereco,
+            };
+            
+            _context.Clientes.Add(cliente);
+            
+            await _context.SaveChangesAsync();
         }
 
         public async Task EditarCliente(Guid id, RequestEditarClienteDTO clienteDto)
         {
-            using (var data = new LocadoraContext(_options))
-            {
-                var clienteAntigo = await data.Clientes.FindAsync(id);
-
-                if (clienteAntigo is null)
-                    throw new NullReferenceException();
-                
-                clienteAntigo.Nome = clienteDto.Nome;
-                clienteAntigo.CPF = clienteDto.CPF.Replace(".", "").Replace("-", "");
-                clienteAntigo.Email = clienteDto.Email.ToLower();
-                clienteAntigo.DataNasc = clienteDto.DataNasc;
-                clienteAntigo.Endereco = clienteDto.Endereco;
-                clienteAntigo.Telefone = clienteDto.Telefone;
-                clienteAntigo.Ativo = clienteDto.Ativo;
-                
-                await data.SaveChangesAsync();
-            }
+            var clienteAntigo = await _context.Clientes.FindAsync(id);
+            
+            clienteAntigo.Nome = clienteDto.Nome;
+            clienteAntigo.CPF = clienteDto.CPF.Replace(".", "").Replace("-", "");
+            clienteAntigo.Email = clienteDto.Email.ToLower();
+            clienteAntigo.DataNasc = clienteDto.DataNasc;
+            clienteAntigo.Endereco = clienteDto.Endereco;
+            clienteAntigo.Telefone = clienteDto.Telefone;
+            clienteAntigo.Ativo = clienteDto.Ativo;
+            
+            await _context.SaveChangesAsync();
         }
 
         public async Task ExcluirCliente(Guid id)
         {
-            using (var data = new LocadoraContext(_options))
-            {
-                Cliente cliente = await data.Clientes.FindAsync(id);
-                
-                if (cliente is null)
-                    throw new NullReferenceException();
+            Cliente cliente = await _context.Clientes.FindAsync(id);
+            
+            if (cliente is null)
+                throw new NullReferenceException();
 
-                data.Clientes.Remove(cliente);
+            _context.Clientes.Remove(cliente);
 
-                await data.SaveChangesAsync();
-            }
+            await _context.SaveChangesAsync();
         }
 
         public async Task<Cliente> ListarClientePorId(Guid id)
         {
-            using (var data = new LocadoraContext(_options))
-            {
-                var cliente = await data.Clientes.FindAsync(id);
-                
-                if (cliente is null)
-                    throw new NullReferenceException();
+            var cliente = await _context.Clientes.FindAsync(id);
+            
+            if (cliente is null)
+                throw new NullReferenceException();
 
-                return cliente;
-            }
+            return cliente;
         }
 
         public async Task<List<Cliente>> ListarClientes()
         {
-            using (var data = new LocadoraContext(_options))
-            {
-                return await data.Clientes.AsNoTracking().ToListAsync();
-            }
+                return await _context.Clientes.AsNoTracking().ToListAsync();
         }
 
         public async Task<bool> ClienteAlocacaoAtiva(Guid id)
         {
-            using (var data = new LocadoraContext(_options))
-            {
-                return await data.VeiculosAlocados.AnyAsync(v => v.ClienteId == id && v.Status == Status.Ativa);
-            }
+            return await _context.VeiculosAlocados.AnyAsync(v => v.ClienteId == id && v.Status == Status.Ativa);
         }
     }
 }

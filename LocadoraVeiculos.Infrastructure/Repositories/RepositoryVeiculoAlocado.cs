@@ -43,7 +43,7 @@ namespace LocadoraVeiculos.Infrastructure.Repositories
             }
         }
 
-        public async Task DarBaixaVeiculoAlocado(Guid id, decimal valorTotalCalculado)
+        public async Task DarBaixaVeiculoAlocado(Guid id, decimal valorTotalCalculado, DateTime dataDevolucao)
         {
             using (var data = new LocadoraContext(_options))
             {
@@ -52,7 +52,7 @@ namespace LocadoraVeiculos.Infrastructure.Repositories
                 if (veiculoAlocado == null)
                     return;
 
-                veiculoAlocado.DataDevolução = DateTime.Now;
+                veiculoAlocado.DataDevolução = dataDevolucao;
                 veiculoAlocado.Status = Status.Concluída;
 
                 veiculoAlocado.ValorTotal = valorTotalCalculado;

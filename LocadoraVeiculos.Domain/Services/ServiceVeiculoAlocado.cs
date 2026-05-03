@@ -69,7 +69,7 @@ namespace LocadoraVeiculos.Domain.Services
 
             locacao.Status = Status.Concluída;
 
-            await _veiculoAlocado.DarBaixaVeiculoAlocado(id, locacao.ValorTotal);
+            await _veiculoAlocado.DarBaixaVeiculoAlocado(id, locacao.ValorTotal, dataBrasilia);
         }
     }
 }

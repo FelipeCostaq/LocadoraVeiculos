@@ -11,7 +11,7 @@ namespace LocadoraVeiculos.Domain.Interfaces.InterfaceVeiculoAlocado
     {
         public Task AdicionarVeiculoAlocado(RequestAdicionarVeiculoAlocadoDTO veiculoDto);
 
-        public Task DarBaixaVeiculoAlocado(Guid id, decimal valorTotalCalculado);
+        public Task DarBaixaVeiculoAlocado(Guid id, decimal valorTotalCalculado, DateTime dataDevolucao);
 
         public Task<List<VeiculoAlocado>> ListarVeiculosAlocados();
 

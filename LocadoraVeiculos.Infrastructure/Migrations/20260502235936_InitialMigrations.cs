@@ -15,11 +15,11 @@ namespace LocadoraVeiculos.Infrastructure.Migrations
                 name: "CategoriasVeiculo",
                 columns: table => new
                 {
-                    Id = table.Column<Guid>(type: "TEXT", nullable: false),
-                    Nome = table.Column<string>(type: "TEXT", nullable: false),
-                    Descricao = table.Column<string>(type: "TEXT", nullable: true),
-                    ValorDiaria = table.Column<decimal>(type: "TEXT", nullable: false),
-                    Ativo = table.Column<bool>(type: "INTEGER", nullable: false)
+                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    Nome = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    Descricao = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    ValorDiaria = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
+                    Ativo = table.Column<bool>(type: "bit", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -30,15 +30,15 @@ namespace LocadoraVeiculos.Infrastructure.Migrations
                 name: "Clientes",
                 columns: table => new
                 {
-                    Id = table.Column<Guid>(type: "TEXT", nullable: false),
-                    Nome = table.Column<string>(type: "TEXT", maxLength: 150, nullable: false),
-                    CPF = table.Column<string>(type: "TEXT", nullable: false),
-                    Email = table.Column<string>(type: "TEXT", nullable: false),
-                    Telefone = table.Column<string>(type: "TEXT", nullable: false),
-                    DataNasc = table.Column<DateOnly>(type: "TEXT", nullable: false),
-                    Endereco = table.Column<string>(type: "TEXT", nullable: true),
-                    Ativo = table.Column<bool>(type: "INTEGER", nullable: false),
-                    CriadoEm = table.Column<DateTime>(type: "TEXT", nullable: false)
+                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    Nome = table.Column<string>(type: "nvarchar(150)", maxLength: 150, nullable: false),
+                    CPF = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    Email = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    Telefone = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    DataNasc = table.Column<DateOnly>(type: "date", nullable: false),
+                    Endereco = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Ativo = table.Column<bool>(type: "bit", nullable: false),
+                    CriadoEm = table.Column<DateTime>(type: "datetime2", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -49,21 +49,21 @@ namespace LocadoraVeiculos.Infrastructure.Migrations
                 name: "Funcionarios",
                 columns: table => new
                 {
-                    Id = table.Column<string>(type: "TEXT", nullable: false),
-                    UserName = table.Column<string>(type: "TEXT", maxLength: 256, nullable: false),
-                    NormalizedUserName = table.Column<string>(type: "TEXT", maxLength: 256, nullable: true),
-                    Email = table.Column<string>(type: "TEXT", maxLength: 256, nullable: false),
-                    NormalizedEmail = table.Column<string>(type: "TEXT", maxLength: 256, nullable: true),
-                    EmailConfirmed = table.Column<bool>(type: "INTEGER", nullable: false),
-                    PasswordHash = table.Column<string>(type: "TEXT", maxLength: 512, nullable: false),
-                    SecurityStamp = table.Column<string>(type: "TEXT", maxLength: 256, nullable: true),
-                    ConcurrencyStamp = table.Column<string>(type: "TEXT", maxLength: 256, nullable: true),
-                    PhoneNumber = table.Column<string>(type: "TEXT", maxLength: 1, nullable: true),
-                    PhoneNumberConfirmed = table.Column<bool>(type: "INTEGER", nullable: false),
-                    TwoFactorEnabled = table.Column<bool>(type: "INTEGER", nullable: false),
-                    LockoutEnd = table.Column<DateTimeOffset>(type: "TEXT", nullable: true),
-                    LockoutEnabled = table.Column<bool>(type: "INTEGER", nullable: false),
-                    AccessFailedCount = table.Column<int>(type: "INTEGER", nullable: false)
+                    Id = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    UserName = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: false),
+                    NormalizedUserName = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
+                    Email = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: false),
+                    NormalizedEmail = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
+                    EmailConfirmed = table.Column<bool>(type: "bit", nullable: false),
+                    PasswordHash = table.Column<string>(type: "nvarchar(512)", maxLength: 512, nullable: false),
+                    SecurityStamp = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
+                    ConcurrencyStamp = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
+                    PhoneNumber = table.Column<string>(type: "nvarchar(1)", maxLength: 1, nullable: true),
+                    PhoneNumberConfirmed = table.Column<bool>(type: "bit", nullable: false),
+                    TwoFactorEnabled = table.Column<bool>(type: "bit", nullable: false),
+                    LockoutEnd = table.Column<DateTimeOffset>(type: "datetimeoffset", nullable: true),
+                    LockoutEnabled = table.Column<bool>(type: "bit", nullable: false),
+                    AccessFailedCount = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -74,10 +74,10 @@ namespace LocadoraVeiculos.Infrastructure.Migrations
                 name: "Roles",
                 columns: table => new
                 {
-                    Id = table.Column<string>(type: "TEXT", nullable: false),
-                    Name = table.Column<string>(type: "TEXT", maxLength: 256, nullable: false),
-                    NormalizedName = table.Column<string>(type: "TEXT", maxLength: 256, nullable: true),
-                    ConcurrencyStamp = table.Column<string>(type: "TEXT", nullable: true)
+                    Id = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    Name = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: false),
+                    NormalizedName = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
+                    ConcurrencyStamp = table.Column<string>(type: "nvarchar(max)", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -88,15 +88,15 @@ namespace LocadoraVeiculos.Infrastructure.Migrations
                 name: "Veiculos",
                 columns: table => new
                 {
-                    Placa = table.Column<string>(type: "TEXT", nullable: false),
-                    Marca = table.Column<string>(type: "TEXT", nullable: false),
-                    Modelo = table.Column<string>(type: "TEXT", nullable: false),
-                    Ano = table.Column<int>(type: "INTEGER", nullable: false),
-                    Cor = table.Column<string>(type: "TEXT", nullable: false),
-                    CategoriaId = table.Column<Guid>(type: "TEXT", nullable: false),
-                    ImagemUrl = table.Column<string>(type: "TEXT", nullable: true),
-                    Disponivel = table.Column<bool>(type: "INTEGER", nullable: false),
-                    Ativo = table.Column<bool>(type: "INTEGER", nullable: false)
+                    Placa = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    Marca = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Modelo = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Ano = table.Column<int>(type: "int", nullable: false),
+                    Cor = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    CategoriaId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    ImagemUrl = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Disponivel = table.Column<bool>(type: "bit", nullable: false),
+                    Ativo = table.Column<bool>(type: "bit", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -107,15 +107,15 @@ namespace LocadoraVeiculos.Infrastructure.Migrations
                 name: "VeiculosAlocados",
                 columns: table => new
                 {
-                    Id = table.Column<Guid>(type: "TEXT", nullable: false),
-                    ClienteId = table.Column<Guid>(type: "TEXT", nullable: false),
-                    PlacaVeiculo = table.Column<string>(type: "TEXT", nullable: false),
-                    DataRetirada = table.Column<DateTime>(type: "TEXT", nullable: false),
-                    DataPrevDevol = table.Column<DateTime>(type: "TEXT", nullable: false),
-                    DataDevolução = table.Column<DateTime>(type: "TEXT", nullable: false),
-                    ValorTotal = table.Column<decimal>(type: "TEXT", nullable: false),
-                    Status = table.Column<int>(type: "INTEGER", nullable: false),
-                    CriadoEm = table.Column<DateTime>(type: "TEXT", nullable: false)
+                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    ClienteId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    PlacaVeiculo = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    DataRetirada = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    DataPrevDevol = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    DataDevolução = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    ValorTotal = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
+                    Status = table.Column<int>(type: "int", nullable: false),
+                    CriadoEm = table.Column<DateTime>(type: "datetime2", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -126,11 +126,11 @@ namespace LocadoraVeiculos.Infrastructure.Migrations
                 name: "FuncionariosClaims",
                 columns: table => new
                 {
-                    Id = table.Column<int>(type: "INTEGER", nullable: false)
-                        .Annotation("Sqlite:Autoincrement", true),
-                    UserId = table.Column<string>(type: "TEXT", nullable: false),
-                    ClaimType = table.Column<string>(type: "TEXT", nullable: true),
-                    ClaimValue = table.Column<string>(type: "TEXT", nullable: true)
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    UserId = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    ClaimType = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    ClaimValue = table.Column<string>(type: "nvarchar(max)", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -147,10 +147,10 @@ namespace LocadoraVeiculos.Infrastructure.Migrations
                 name: "FuncionariosLogin",
                 columns: table => new
                 {
-                    LoginProvider = table.Column<string>(type: "TEXT", nullable: false),
-                    ProviderKey = table.Column<string>(type: "TEXT", nullable: false),
-                    ProviderDisplayName = table.Column<string>(type: "TEXT", nullable: true),
-                    UserId = table.Column<string>(type: "TEXT", nullable: false)
+                    LoginProvider = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    ProviderKey = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    ProviderDisplayName = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    UserId = table.Column<string>(type: "nvarchar(450)", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -167,10 +167,10 @@ namespace LocadoraVeiculos.Infrastructure.Migrations
                 name: "FuncionariosTokens",
                 columns: table => new
                 {
-                    UserId = table.Column<string>(type: "TEXT", nullable: false),
-                    LoginProvider = table.Column<string>(type: "TEXT", nullable: false),
-                    Name = table.Column<string>(type: "TEXT", nullable: false),
-                    Value = table.Column<string>(type: "TEXT", nullable: true)
+                    UserId = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    LoginProvider = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    Name = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    Value = table.Column<string>(type: "nvarchar(max)", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -187,8 +187,8 @@ namespace LocadoraVeiculos.Infrastructure.Migrations
                 name: "FuncionariosRoles",
                 columns: table => new
                 {
-                    UserId = table.Column<string>(type: "TEXT", nullable: false),
-                    RoleId = table.Column<string>(type: "TEXT", nullable: false)
+                    UserId = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    RoleId = table.Column<string>(type: "nvarchar(450)", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -211,11 +211,11 @@ namespace LocadoraVeiculos.Infrastructure.Migrations
                 name: "RoleClaims",
                 columns: table => new
                 {
-                    Id = table.Column<int>(type: "INTEGER", nullable: false)
-                        .Annotation("Sqlite:Autoincrement", true),
-                    RoleId = table.Column<string>(type: "TEXT", nullable: false),
-                    ClaimType = table.Column<string>(type: "TEXT", nullable: true),
-                    ClaimValue = table.Column<string>(type: "TEXT", nullable: true)
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    RoleId = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    ClaimType = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    ClaimValue = table.Column<string>(type: "nvarchar(max)", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -231,7 +231,7 @@ namespace LocadoraVeiculos.Infrastructure.Migrations
             migrationBuilder.InsertData(
                 table: "Funcionarios",
                 columns: new[] { "Id", "AccessFailedCount", "ConcurrencyStamp", "Email", "EmailConfirmed", "LockoutEnabled", "LockoutEnd", "NormalizedEmail", "NormalizedUserName", "PasswordHash", "PhoneNumber", "PhoneNumberConfirmed", "SecurityStamp", "TwoFactorEnabled", "UserName" },
-                values: new object[] { "59306041-3580-4963-8a3c-36a536f9c2d1", 0, "B2C5C9E5-0E2E-4D71-B534-1F677E57C361", "admin@locadora.com", true, false, null, "ADMIN@LOCADORA.COM", "ADMIN@LOCADORA.COM", "AQAAAAIAAYagAAAAEJeiRW4mKMNb6fBuW0op670BtGdf3hU0TB0lBSSNM6u6RrX240gR9e+zQAF6f4kzrA==", null, false, "78377758-1936-4C5D-9150-70F071253C4D", false, "admin@locadora.com" });
+                values: new object[] { "59306041-3580-4963-8a3c-36a536f9c2d1", 0, "B2C5C9E5-0E2E-4D71-B534-1F677E57C361", "admin@locadora.com", true, false, null, "ADMIN@LOCADORA.COM", "ADMIN@LOCADORA.COM", "AQAAAAIAAYagAAAAEOMFTrwAtRwqbGGD2cN2VpN2+gJGsw1F3/hTqVN2ECNpAUX7sC1MAhJ+lUBftA35Sg==", null, false, "78377758-1936-4C5D-9150-70F071253C4D", false, "admin@locadora.com" });
 
             migrationBuilder.CreateIndex(
                 name: "IX_CategoriasVeiculo_Nome",
@@ -260,7 +260,8 @@ namespace LocadoraVeiculos.Infrastructure.Migrations
                 name: "UserNameIndex",
                 table: "Funcionarios",
                 column: "NormalizedUserName",
-                unique: true);
+                unique: true,
+                filter: "[NormalizedUserName] IS NOT NULL");
 
             migrationBuilder.CreateIndex(
                 name: "IX_FuncionariosClaims_UserId",
@@ -286,7 +287,8 @@ namespace LocadoraVeiculos.Infrastructure.Migrations
                 name: "RoleNameIndex",
                 table: "Roles",
                 column: "NormalizedName",
-                unique: true);
+                unique: true,
+                filter: "[NormalizedName] IS NOT NULL");
         }
 
         /// <inheritdoc />

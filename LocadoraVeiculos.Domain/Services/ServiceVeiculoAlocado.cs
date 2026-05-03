@@ -53,7 +53,11 @@ namespace LocadoraVeiculos.Domain.Services
             if (locacao == null)
                 throw new NullReferenceException("Nenhuma locação encontrada.");
 
-            locacao.DataDevolução = DateTime.Now;
+            TimeZoneInfo brasiliaTimeZone = TimeZoneInfo.FindSystemTimeZoneById("E. South America Standard Time");
+            
+            DateTime dataBrasilia = TimeZoneInfo.ConvertTimeFromUtc(DateTime.UtcNow, brasiliaTimeZone);
+
+            locacao.DataDevolução = dataBrasilia;
 
             int diasUtilizados = (locacao.DataDevolução.Date - locacao.DataRetirada.Date).Days;
 

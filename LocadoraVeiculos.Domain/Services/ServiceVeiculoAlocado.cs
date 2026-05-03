@@ -39,8 +39,12 @@ namespace LocadoraVeiculos.Domain.Services
 
             if (locacao == null)
                 throw new NullReferenceException("Nenhuma locação encontrada.");
+            
+            TimeZoneInfo brasiliaTimeZone = TimeZoneInfo.FindSystemTimeZoneById("E. South America Standard Time");
+            
+            DateTime dataBrasilia = TimeZoneInfo.ConvertTimeFromUtc(DateTime.UtcNow, brasiliaTimeZone);
 
-            if (DateTime.Now >= locacao.DataRetirada)
+            if (dataBrasilia >= locacao.DataRetirada)
                 throw new InvalidOperationException("A locação não pode ser cancelada, pois, o veículo esta na data de retirada ou após a data de retirada.");
 
             await _veiculoAlocado.CancelarVeiculoAlocado(id);

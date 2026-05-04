@@ -35,15 +35,6 @@ Lista todas as categorias de veículo cadastradas.
 - **Autenticação:** Não requerida
 - **Resposta de sucesso:** `200 OK`
 
-```json
-[
-  {
-    "id": "uuid",
-    "nome": "string"
-  }
-]
-```
-
 ---
 
 ### `POST /categoria` 🔒
@@ -51,26 +42,9 @@ Lista todas as categorias de veículo cadastradas.
 Adiciona uma nova categoria de veículo.
 
 - **Autenticação:** Requerida
-- **Corpo da requisição:**
-
-```json
-{
-  "nome": "string"
-}
-```
-
-| Campo | Tipo   | Obrigatório | Descrição             |
-|-------|--------|-------------|-----------------------|
-| nome  | string | ✅           | Nome da categoria     |
 
 - **Resposta de sucesso:** `201 Created`
 - **Resposta de erro:** `400 Bad Request`
-
-```json
-{
-  "mensagem": "Descrição do erro"
-}
-```
 
 ---
 
@@ -81,27 +55,9 @@ Edita uma categoria de veículo existente.
 - **Autenticação:** Requerida
 - **Parâmetro de query:**
 
-| Parâmetro | Tipo | Obrigatório | Descrição                    |
-|-----------|------|-------------|------------------------------|
-| id        | Guid | ✅           | ID da categoria a ser editada |
-
-- **Corpo da requisição:**
-
-```json
-{
-  "nome": "string"
-}
-```
-
 - **Resposta de sucesso:** `201 Created`
 - **Resposta de erro:** `400 Bad Request`
-
-```json
-{
-  "mensagem": "Descrição do erro"
-}
-```
-
+- 
 ---
 
 ## Clientes
@@ -117,17 +73,6 @@ Lista todos os clientes cadastrados.
 - **Autenticação:** Requerida
 - **Resposta de sucesso:** `200 OK`
 
-```json
-[
-  {
-    "id": "uuid",
-    "nome": "string",
-    "cpf": "string",
-    "email": "string"
-  }
-]
-```
-
 ---
 
 ### `GET /clientes/{id}`
@@ -136,10 +81,6 @@ Retorna um cliente específico pelo ID.
 
 - **Autenticação:** Requerida
 - **Parâmetro de rota:**
-
-| Parâmetro | Tipo | Obrigatório | Descrição          |
-|-----------|------|-------------|--------------------|
-| id        | Guid | ✅           | ID do cliente      |
 
 - **Resposta de sucesso:** `200 OK`
 - **Resposta de erro:** `404 Not Found` — quando o cliente não é encontrado
@@ -151,30 +92,9 @@ Retorna um cliente específico pelo ID.
 Adiciona um novo cliente.
 
 - **Autenticação:** Requerida
-- **Corpo da requisição:**
-
-```json
-{
-  "nome": "string",
-  "cpf": "string",
-  "email": "string"
-}
-```
-
-| Campo | Tipo   | Obrigatório | Descrição          |
-|-------|--------|-------------|--------------------|
-| nome  | string | ✅           | Nome do cliente    |
-| cpf   | string | ✅           | CPF do cliente     |
-| email | string | ✅           | E-mail do cliente  |
 
 - **Resposta de sucesso:** `201 Created`
 - **Resposta de erro:** `400 Bad Request`
-
-```json
-{
-  "mensagem": "Descrição do erro"
-}
-```
 
 ---
 
@@ -185,27 +105,8 @@ Edita os dados de um cliente existente.
 - **Autenticação:** Requerida
 - **Parâmetro de query:**
 
-| Parâmetro | Tipo | Obrigatório | Descrição                  |
-|-----------|------|-------------|----------------------------|
-| id        | Guid | ✅           | ID do cliente a ser editado |
-
-- **Corpo da requisição:**
-
-```json
-{
-  "nome": "string",
-  "email": "string"
-}
-```
-
 - **Resposta de sucesso:** `201 Created`
 - **Resposta de erro:** `400 Bad Request`
-
-```json
-{
-  "mensagem": "Descrição do erro"
-}
-```
 
 ---
 
@@ -215,19 +116,9 @@ Exclui um cliente pelo ID.
 
 - **Autenticação:** Requerida
 - **Parâmetro de query:**
-
-| Parâmetro | Tipo | Obrigatório | Descrição                   |
-|-----------|------|-------------|-----------------------------|
-| id        | Guid | ✅           | ID do cliente a ser excluído |
-
+- 
 - **Resposta de sucesso:** `204 No Content`
 - **Resposta de erro:** `400 Bad Request`
-
-```json
-{
-  "mensagem": "Descrição do erro"
-}
-```
 
 ---
 
@@ -242,17 +133,6 @@ Lista todos os veículos cadastrados.
 - **Autenticação:** Não requerida
 - **Resposta de sucesso:** `200 OK`
 
-```json
-[
-  {
-    "placa": "string",
-    "modelo": "string",
-    "categoriaId": "uuid",
-    "disponivel": true
-  }
-]
-```
-
 ---
 
 ### `GET /veiculos/disponivel`
@@ -261,17 +141,7 @@ Lista apenas os veículos disponíveis para aluguel.
 
 - **Autenticação:** Não requerida
 - **Resposta de sucesso:** `200 OK`
-
-```json
-[
-  {
-    "placa": "string",
-    "modelo": "string",
-    "categoriaId": "uuid"
-  }
-]
-```
-
+  
 ---
 
 ### `POST /veiculos` 🔒
@@ -279,30 +149,9 @@ Lista apenas os veículos disponíveis para aluguel.
 Adiciona um novo veículo.
 
 - **Autenticação:** Requerida
-- **Corpo da requisição:**
-
-```json
-{
-  "placa": "string",
-  "modelo": "string",
-  "categoriaId": "uuid"
-}
-```
-
-| Campo       | Tipo   | Obrigatório | Descrição                    |
-|-------------|--------|-------------|------------------------------|
-| placa       | string | ✅           | Placa do veículo             |
-| modelo      | string | ✅           | Modelo do veículo            |
-| categoriaId | Guid   | ✅           | ID da categoria do veículo   |
 
 - **Resposta de sucesso:** `201 Created`
 - **Resposta de erro:** `400 Bad Request`
-
-```json
-{
-  "mensagem": "Descrição do erro"
-}
-```
 
 ---
 
@@ -313,27 +162,8 @@ Edita os dados de um veículo existente.
 - **Autenticação:** Requerida
 - **Parâmetro de query:**
 
-| Parâmetro | Tipo   | Obrigatório | Descrição                   |
-|-----------|--------|-------------|-----------------------------|
-| placa     | string | ✅           | Placa do veículo a ser editado |
-
-- **Corpo da requisição:**
-
-```json
-{
-  "modelo": "string",
-  "categoriaId": "uuid"
-}
-```
-
 - **Resposta de sucesso:** `200 OK`
 - **Resposta de erro:** `400 Bad Request`
-
-```json
-{
-  "mensagem": "Descrição do erro"
-}
-```
 
 ---
 
@@ -348,19 +178,6 @@ Lista todos os registros de alocação de veículos.
 - **Autenticação:** Requerida
 - **Resposta de sucesso:** `200 OK`
 
-```json
-[
-  {
-    "id": "uuid",
-    "veiculoId": "uuid",
-    "clienteId": "uuid",
-    "dataInicio": "datetime",
-    "dataFim": "datetime",
-    "status": "string"
-  }
-]
-```
-
 ---
 
 ### `GET /veiculoalocado/disponibilidade`
@@ -370,15 +187,6 @@ Lista veículos alocados com informações de disponibilidade.
 - **Autenticação:** Não requerida
 - **Resposta de sucesso:** `200 OK`
 
-```json
-[
-  {
-    "veiculoId": "uuid",
-    "disponivel": true
-  }
-]
-```
-
 ---
 
 ### `POST /veiculoalocado/add` 🔒
@@ -386,32 +194,9 @@ Lista veículos alocados com informações de disponibilidade.
 Registra uma nova alocação de veículo.
 
 - **Autenticação:** Requerida
-- **Corpo da requisição:**
-
-```json
-{
-  "veiculoId": "uuid",
-  "clienteId": "uuid",
-  "dataInicio": "datetime",
-  "dataFim": "datetime"
-}
-```
-
-| Campo      | Tipo     | Obrigatório | Descrição                    |
-|------------|----------|-------------|------------------------------|
-| veiculoId  | Guid     | ✅           | ID do veículo a ser alocado  |
-| clienteId  | Guid     | ✅           | ID do cliente                |
-| dataInicio | datetime | ✅           | Data de início da alocação   |
-| dataFim    | datetime | ✅           | Data de fim da alocação      |
 
 - **Resposta de sucesso:** `201 Created`
 - **Resposta de erro:** `400 Bad Request`
-
-```json
-{
-  "mensagem": "Descrição do erro"
-}
-```
 
 ---
 
@@ -422,18 +207,8 @@ Dá baixa em uma alocação, finalizando o aluguel.
 - **Autenticação:** Requerida
 - **Parâmetro de query:**
 
-| Parâmetro | Tipo | Obrigatório | Descrição              |
-|-----------|------|-------------|------------------------|
-| id        | Guid | ✅           | ID da alocação         |
-
 - **Resposta de sucesso:** `200 OK`
 - **Resposta de erro:** `400 Bad Request`
-
-```json
-{
-  "mensagem": "Descrição do erro"
-}
-```
 
 ---
 
@@ -444,18 +219,8 @@ Cancela uma alocação de veículo.
 - **Autenticação:** Requerida
 - **Parâmetro de query:**
 
-| Parâmetro | Tipo | Obrigatório | Descrição              |
-|-----------|------|-------------|------------------------|
-| id        | Guid | ✅           | ID da alocação         |
-
 - **Resposta de sucesso:** `200 OK`
 - **Resposta de erro:** `400 Bad Request`
-
-```json
-{
-  "mensagem": "Descrição do erro"
-}
-```
 
 ---
 

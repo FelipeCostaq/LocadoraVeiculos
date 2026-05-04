@@ -6,15 +6,6 @@ API desenvolvida com **.NET 10**, **Entity Framework**, **Clean Architecture**, 
 
 ---
 
-## Sumário
-
-- [Categorias de Veículo](#-categorias-de-veículo)
-- [Clientes](#-clientes)
-- [Veículos](#-veículos)
-- [Veículos Alocados](#-veículos-alocados)
-
----
-
 ## Autenticação
 
 ### Admin credenciais padrão.
